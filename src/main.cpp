@@ -1,6 +1,7 @@
 #include <iostream>
+#include <singleton/GameManager.h>
 
-int main(int argc, char* args[]) {
-
-    return 0;
+int main()
+{
+    GameManager::Instance()->Initialize();
 }
