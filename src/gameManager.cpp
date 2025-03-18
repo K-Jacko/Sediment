@@ -7,10 +7,10 @@ GameManager::GameManager()
 
 }
 
-GameManager* GameManager::Instance()
+GameManager& GameManager::Instance()
 {
 	static GameManager instance;
-	return &instance;
+	return instance;
 };
 
 void GameManager::Initialize()
@@ -29,6 +29,14 @@ void GameManager::Initialize()
 
 void GameManager::Update()
 {
-
+	//Instance().UpdateEvents();
+	//Instance().UpdateCamera();
+	//Instance().UpdateEverythingElse(){};
+	//Instance().UpdateCollision();
 };
+
+void GameManager::Draw()
+{
+
+}
 
