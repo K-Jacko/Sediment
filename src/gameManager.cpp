@@ -16,6 +16,7 @@ GameManager& GameManager::Instance()
 void GameManager::Initialize()
 {
 	IManager::Initialize();
+	_windowManager.Initialize();
 	//Window Manager
 	//Input Manager
 	//Asset Manager Can be split it "management" and "factory"
