@@ -3,5 +3,6 @@
 
 namespace utils
 {
-	std::string guidToString(const GUID& guid);
+
 }
+

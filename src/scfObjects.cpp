@@ -1,4 +1,4 @@
-#include <object/SCFObjects.h>
+#include <object/SCF.h>
 
 std::string SCF::getName() const
 {

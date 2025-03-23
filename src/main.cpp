@@ -1,7 +1,8 @@
 #include <iostream>
+#include <SDL.h>
 #include <singleton/GameManager.h>
 
-int main()
+int main(int argc, char* args[])
 {
     GameManager::Instance().Initialize();
     while (GameManager::Instance()._isRunning)
@@ -10,4 +11,5 @@ int main()
 
         GameManager::Instance().Draw();
     }
+    return 0;
 }

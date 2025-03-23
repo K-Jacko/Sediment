@@ -1,11 +1,11 @@
 {
   "id": "08d1bd4f-0fc0-4196-ac73-8e1cab344150",
   "name": "Sediment_Game",
-  "displayDetails": {
+  "display_details": {
     "screen_details": {
       "title": "Sediment",
-      "resolutionWidth": 1920,
-      "resolutionHeight": 1080,
+      "resolution_width": 1920,
+      "resolution_height": 1080,
       "positionX": 0,
       "positionY": 0,
       "flags": [
@@ -19,7 +19,7 @@
       ]
     }
   },
-  "assetDetails": [
+  "asset_details": [
     {
       "id": "d3528220-4dfd-474e-a875-ffc069f29ad9",
       "name": "Sediment_Logo",
