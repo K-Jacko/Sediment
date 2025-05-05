@@ -10,61 +10,106 @@ std::string SCF::getID() const
     return _id;
 }
 
-void SCF::fromJson(const web::json::value& json)
+void SCF::fromJson(const nlohmann::json& json)
 {
-    if (json.has_field(U("id")))
-        _id = utility::conversions::to_utf8string(json.at(U("id")).as_string());
-    if (json.has_field(U("name")))
-        _name = utility::conversions::to_utf8string(json.at(U("name")).as_string());
-    if (json.has_field(U("display")))
-        displayDetails.fromJson(json.at(U("display_details")));
+    if (json.contains("id") && json["id"].is_string())
+            _id = json.at("id");
+    if (json.contains("name") && json["name"].is_string())
+        _name = json.at("name");
+    if (json.contains("display_details") && json["display_details"].is_object())
+        displayDetails.fromJson(json["display_details"]);
+    if (json.contains("asset_details") && json["asset_details"].is_object())
+        assetDetails.fromJson(json["asset_details"]);
+
+    _initialized = !_id.empty() && !_name.empty();
 }
 
-void DisplayDetails::fromJson(const web::json::value& json)
-{
-    if (json.has_field(U("screen_details")))
-    {
-        const auto& screen_detail_array = json.at(U("screen_details"));
-        for (const auto& screen_detail : screen_detail_array)
-        {
+void DisplayDetails::fromJson(const nlohmann::json& json) {
+    if (json.contains("screen_details") && json["screen_details"].is_array()) {
+        screen_details.clear();
+        for (const auto& screen_detail : json["screen_details"]) {
             ScreenDetail screenDetail;
-            screenDetail.fromJson(screen_detail.toJson());
+            screenDetail.fromJson(screen_detail);
             screen_details.push_back(screenDetail);
         }
     }
 }
 
-web::json::value ScreenDetail::toJson() const
+SCF::SCF()
 {
-    web::json::value json;
-    json[U("resolutionWidth")] = web::json::value::number(_resolutionWidth);
-    json[U("resolutionHeight")] = web::json::value::number(_resolutionHeight);
-    json[U("positionX")] = web::json::value::number(_positionX);
-    json[U("positionY")] = web::json::value::number(_positionY);
-    json[U("title")] = web::json::value(_title.c_str());
-    return json;
+    _initialized = false;
+    _id = "";
+    _name = "";
+    displayDetails = DisplayDetails();
+    assetDetails = AssetDetails();
 }
 
-void ScreenDetail::fromJson(const web::json::value& json)
+SCF::~SCF()
 {
-    if (json.has_field(U("resolution_width")))
-        _resolutionWidth = json.at(U("resolution_width")).as_integer();
-    if (json.has_field(U("resolution_height")))
-        _resolutionHeight = json.at(U("resolution_height")).as_integer();
-    if (json.has_field(U("positionX")))
-        _positionX = json.at(U("positionX")).as_integer();
-    if (json.has_field(U("positionY")))
-        _positionY = json.at(U("positionY")).as_integer();
-    if (json.has_field(U("title")))
-        _title = utility::conversions::to_utf8string(json.at(U("title")).as_string());
 }
 
-Vector2 ScreenDetail::getScreenResolution()
+nlohmann::json ScreenDetail::toJson() const
 {
-    return Vector2(_resolutionWidth, _resolutionHeight);
+    return {{"resolutionWidth", _resolutionWidth},{"resolutionHeight", _resolutionHeight},{"positionX", _positionX},{"positionY", _positionY},{"title", name}};
 }
 
-Vector2 ScreenDetail::getScreenPosition()
+void ScreenDetail::fromJson(const nlohmann::json& json)
 {
-    return Vector2(_positionX, _positionY);
+    if (json.contains("resolution_width"))
+        _resolutionWidth = json.at("resolution_width").get<int>();
+    if (json.contains("resolution_height"))
+        _resolutionHeight = json.at("resolution_height").get<int>();
+    if (json.contains("positionX"))
+        _positionX = json.at("positionX").get<int>();
+    if (json.contains("positionY"))
+        _positionY = json.at("positionY").get<int>();
+    if (json.contains("title"))
+        name = json.at("title").get<std::string>();
+    if (json.contains("id"))
+        _id = json.at("id").get<std::string>();
+}
+
+Vector2Int ScreenDetail::getScreenResolution()
+{
+    return Vector2Int(_resolutionWidth, _resolutionHeight);
+}
+
+Vector2Int ScreenDetail::getScreenPosition()
+{
+    return Vector2Int(_positionX, _positionY);
+}
+
+std::string ScreenDetail::getID()
+{
+    return _id;
+}
+
+void AssetDetails::fromJson(const nlohmann::json& json)
+{
+    if (json.contains("asset_details") && json["asset_details"].is_array()) {
+        assets.clear();
+        for (const auto& asset_detail : json["asset_details"]) {
+            AssetDetail assetDetail;
+            assetDetail.fromJson(asset_detail);
+            assets.push_back(assetDetail);
+        }
+    }
+}
+
+void AssetDetail::fromJson(const nlohmann::json& json)
+{
+    if (json.contains("id") && json.at("id").is_string())
+        id = json.at("id");
+    if (json.contains("name") && json.at("name").is_string())
+        name = json.at("name");
+    if (json.contains("path") && json.at("path").is_string())
+        path = json.at("path");
+    if (json.contains("type"))
+        type = json.at("type");
+    if (json.contains("size_in_bytes"))
+        sizeInBytes = json.at("size_in_bytes");
+
+    if (!id.empty() && !name.empty() && path.empty() && sizeInBytes < 0)
+        std::cout << "Error parsing Asset detail from Json" << std::endl;
+
 }

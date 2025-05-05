@@ -1,6 +1,6 @@
 #include <iostream>
 #include <ostream>
-#include <Window.h>
+#include <object/Window.h>
 #include "factory/WindowFactory.h"
 
 Window* WindowFactory::CreateSDLWindow(const std::string& name, unsigned int width, unsigned int height, bool fullscreen, bool hidden, bool borderless, bool resizable, bool vsync)

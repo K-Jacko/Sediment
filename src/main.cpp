@@ -4,12 +4,12 @@
 
 int main(int argc, char* args[])
 {
-    GameManager::Instance().Initialize();
-    while (GameManager::Instance()._isRunning)
+    GameManager::Instance()->Initialize();
+    while (GameManager::Instance()->_isRunning)
     {
-        GameManager::Instance().Update();
+        GameManager::Instance()->Update();
 
-        GameManager::Instance().Draw();
+        GameManager::Instance()->Draw();
     }
     return 0;
 }

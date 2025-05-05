@@ -1,5 +1,5 @@
 #pragma once
-#include "SDL.h"
+#include <SDL.h>
 #include <string>
 
 class Window
@@ -16,8 +16,8 @@ public:
 	void SetHeight(unsigned int height);
 	unsigned int GetWidth();
 	unsigned int GetHeight();
-	std::string WindowName;
-	std::string ID;
+	std::string WindowName = "";
+	std::string ID = "";
 private:
 	unsigned int _width = 0;
 	unsigned int _height = 0;

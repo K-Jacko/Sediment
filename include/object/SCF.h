@@ -1,8 +1,12 @@
 #pragma once
-#include <cpprest/json.h>
+#include <windows.h>
+#include <intrin.h>
+#include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
-#include <math.h>
+#include <object/Vector2Int.h>
+#include <iostream>
+
 
 class ScreenFlags
 {
@@ -24,13 +28,24 @@ enum AssetType
 class AssetDetail
 {
 public:
-    AssetDetail();
-    ~AssetDetail();
+    AssetDetail() = default;
+    ~AssetDetail() = default;
     std::string id;
     std::string name;
     std::string path;
     AssetType type;
     float sizeInBytes;
+    void fromJson(const nlohmann::json& json);
+};
+
+class AssetDetails
+{
+public:
+    AssetDetails() = default;
+    ~AssetDetails() = default;
+    std::string asset_pack_name;
+    std::vector<AssetDetail> assets;
+    void fromJson(const nlohmann::json& json);
 };
 
 class ScreenDetail
@@ -38,16 +53,17 @@ class ScreenDetail
 public:
     ScreenDetail() = default;
     ~ScreenDetail() = default;
-    Vector2 getScreenResolution();
-    Vector2 getScreenPosition();
-    web::json::value toJson() const;
-    void fromJson(const web::json::value& json);
-
+    Vector2Int getScreenResolution();
+    Vector2Int getScreenPosition();
+    std::string getID();
+    nlohmann::json toJson() const;
+    void fromJson(const nlohmann::json& json);
+    std::string name;
+    ScreenFlags flags;
 private:
+    std::string _id;
     int _resolutionWidth, _resolutionHeight = 0;
     int _positionX, _positionY = 0;
-    std::string _title;
-    ScreenFlags flags;
 };
 
 class DisplayDetails
@@ -56,7 +72,7 @@ public:
     DisplayDetails() = default;
     ~DisplayDetails() = default;
     std::vector<ScreenDetail> screen_details;
-    void fromJson(const web::json::value& json);
+    void fromJson(const nlohmann::json& json);
 
 };
 
@@ -68,9 +84,9 @@ public:
     std::string getName() const;
     std::string getID() const;
     DisplayDetails displayDetails;
-    AssetDetail assetDetails;
+    AssetDetails assetDetails;
     bool isValid() const {return _initialized;}
-    void fromJson(const web::json::value& json);
+    void fromJson(const nlohmann::json& json);
 
 private:
     bool _initialized;

@@ -4,7 +4,7 @@ class IFactory
 {
 public:
 	IFactory();
-	virtual ~IFactory();
+	virtual ~IFactory(){}
 
 private:
 	virtual void Build();
