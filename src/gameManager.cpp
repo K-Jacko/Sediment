@@ -1,22 +1,25 @@
-#include <interface/IManager.h>
 #include <singleton/GameManager.h>
 
+GameManager* GameManager::_instance = nullptr;
 
 GameManager::GameManager()
 {
 
 }
 
-GameManager& GameManager::Instance()
+GameManager* GameManager::Instance()
 {
-	static GameManager instance;
-	return instance;
+	if (_instance == nullptr)
+	{
+		_instance = new GameManager();
+	}
+	return _instance;
 };
 
 void GameManager::Initialize()
 {
-	IManager::Initialize();
-	_windowManager.Initialize();
+	_dataManager->Initialize();
+	_windowManager->Initialize();
 	//Window Manager
 	//Input Manager
 	//Asset Manager Can be split it "management" and "factory"

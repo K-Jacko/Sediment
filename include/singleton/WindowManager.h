@@ -1,19 +1,21 @@
 #pragma once
 #include "interface/IManager.h"
 #include "factory/WindowFactory.h"
+#include <object/SCF.h>
+
 
 class WindowManager : public IManager
 {
 public:
-  WindowManager(const WindowManager&) = delete;
+  WindowManager() = default;
   ~WindowManager() override;
-  static WindowManager& Instance();
-  explicit WindowManager(WindowFactory& factory);
+  static WindowManager* Instance();
+  explicit WindowManager(WindowFactory* factory);
   void Initialize() override;
-  Window* CreateSDLWindow();
+  Window* CreateSDLWindow(ScreenDetail details);
 private:
-  WindowManager();
-  WindowFactory& _factory;
+  static WindowManager* _instance;
+  WindowFactory* _factory;
   std::unordered_map<std::string, Window*> _windows;
-  std::vector<SDL_Window&> _activeWindows;
+  std::vector<std::unique_ptr<Window>> _activeWindows;
 };

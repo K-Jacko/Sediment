@@ -1,13 +1,18 @@
 #include "../include/singleton/WindowManager.h"
 
+WindowManager* WindowManager::_instance = 0;
 
-WindowManager& WindowManager::Instance()
+WindowManager* WindowManager::Instance()
 {
-	static WindowManager instance;
-	return instance;
+	if (_instance == 0)
+	{
+		std::cout << "Creating new WindowManager Instance" << std::endl;
+		_instance = new WindowManager();
+	}
+	return _instance;
 }
 
-WindowManager::WindowManager(WindowFactory& factory)
+WindowManager::WindowManager(WindowFactory* factory)
 	: _factory(factory)
 {
 
@@ -21,13 +26,13 @@ void WindowManager::Initialize()
 	//Register Screens to publicly available methods
 }
 
-Window* WindowManager::CreateSDLWindow()
+Window* WindowManager::CreateSDLWindow(ScreenDetail data)
 {
-	if (_windows.find(name) == _windows.end())
+	if (_windows.find(data.name) == _windows.end())
 	{
-		std::cerr << "Window \"" << name << "\" does not exist!" << std::endl;
-		return nullptr;
+		std::cerr << "Creating Window \"" <<data.name << "\" does not exist!" << std::endl;
+		Window* window = _factory->CreateSDLWindow(data.name,  data.getScreenResolution()._x,  data.getScreenResolution()._y,  false,  false,  false,  true, true);
+		return window;
 	}
-
-	Window* window = _factory.CreateSDLWindow(name,  width,  height,  fullscreen,  hidden,  borderless,  resizable, vsync);
+	return nullptr;
 }
