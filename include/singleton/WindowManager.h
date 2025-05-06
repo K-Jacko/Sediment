@@ -7,15 +7,16 @@
 class WindowManager : public IManager
 {
 public:
-  WindowManager() = default;
+  WindowManager();
   ~WindowManager() override;
   static WindowManager* Instance();
   explicit WindowManager(WindowFactory* factory);
-  void Initialize() override;
+  bool Initialize() override;
   Window* CreateSDLWindow(ScreenDetail details);
+  void OpenWindow();
 private:
   static WindowManager* _instance;
-  WindowFactory* _factory;
+  std::unique_ptr<WindowFactory> _windowFactory;
   std::unordered_map<std::string, Window*> _windows;
   std::vector<std::unique_ptr<Window>> _activeWindows;
 };

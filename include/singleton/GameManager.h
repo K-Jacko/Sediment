@@ -9,9 +9,10 @@ public:
   GameManager();
   ~GameManager() override;
   static GameManager* Instance();
-  void Initialize() override;
+  void Start();
   void Update() override;
   void Draw();
+  void Stop();
   bool _isRunning = false;
 
   DataManager* _dataManager = DataManager::Instance();

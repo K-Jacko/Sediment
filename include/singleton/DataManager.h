@@ -7,9 +7,8 @@
 #include <nlohmann/json.hpp>
 #include <object/SCF.h>
 #include <string>
-#include <fstream>
-#include <filesystem>
-#include <iostream>
+
+#include "factory/SCFFactory.h"
 
 
 class DataManager : public IManager
@@ -18,7 +17,7 @@ public:
 	DataManager();
 	~DataManager() override;
 	static DataManager* Instance();
-	void Initialize() override;
+	bool Initialize() override;
 	void loadSCFFromFile(const std::string& filePath);
 	void loadFromHTTP(const std::string& url);
 	const nlohmann::json& getData();
@@ -26,6 +25,7 @@ public:
 	std::string getAppDataPath();
 private:
 	static DataManager* _instance;
+	std::unique_ptr<SCFFactory> _scfFactory;
 	SCF* _localSCF;
 	SCF* _volatile_SCF;
 	SCF* _persistent_SCF;

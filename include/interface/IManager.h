@@ -9,6 +9,6 @@ class IManager
 	public:
 	IManager(){}
 	virtual ~IManager(){};
-	virtual void Initialize(){}
+	virtual bool Initialize(){ return false; }
 	virtual void Update(){}
 };

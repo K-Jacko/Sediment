@@ -4,6 +4,7 @@ DataManager* DataManager::_instance = 0;
 
 DataManager::DataManager()
 {
+	_scfFactory = std::make_unique<SCFFactory>();
 	_localSCF = nullptr;
 	_volatile_SCF = nullptr;
 	_persistent_SCF = nullptr;
@@ -17,76 +18,54 @@ DataManager* DataManager::Instance()
 {
 	if (_instance == nullptr)
 	{
+		std::cout << "Creating new DataManager Instance" << std::endl;
 		_instance = new DataManager();
+		return _instance;
 	}
 	return nullptr;
 }
 
-void DataManager::Initialize()
+bool DataManager::Initialize()
 {
-	//Check if Persistent_SCF exists
-	//Check if Local_SCF exists
-	//Bonus:: To ensure the application always has a valid config file we can have a standard backup SCF that sits on a server
-	//We can then download it to our local file
-	std::string localPath = getAppDataPath();
+	std::cout << "DataManager Initializing" << std::endl;
+
+	//TODO: Make sure to add GameName or OrgName to local file Dir
+	const std::string localPath = getAppDataPath() + "\\WakeIndustries";
 	if (!std::filesystem::exists(localPath))
 	{
 		std::filesystem::create_directory(localPath);
-		std::cout << "Created directory: " << localPath << std::endl;
+		std::cout << "Created SCF directory: " << localPath << std::endl;
 	}
-	std::string persistentPath =  localPath + "PSCF.json";
-	if (fileExists(persistentPath))
+
+	const std::string localSCFPath = localPath + "\\LSCF.json";
+
+	if (fileExists(localSCFPath))
 	{
-		loadSCFFromFile(persistentPath);
+		_localSCF = _scfFactory->createSCF(localSCFPath);
+		return true;
 	}
 	else
 	{
-		std::cout << "Local SCF JSON File does not exist" << std::endl;
+		std::cout << "Local SCF not found at " + localSCFPath +  ". looking for Persistent SCF... " << std::endl ;
+		std::string persistentPath =  localPath + "\\PSCF.json";
+
+		if (fileExists(persistentPath))
+		{
+			SCF* persistentConfig = _scfFactory->createSCF(localSCFPath);
+			return true;
+
+		}
+		else
+		{
+			std::cout << "Persistent SCF File failed to load!" << std::endl;
+			return false;
+		}
 	}
-
-
 }
 
 void DataManager::loadSCFFromFile(const std::string& filePath)
 {
-	if (filePath.empty())
-	{
-		std::cout << "File Path is empty" << std::endl;
-	}
 
-	if (!std::filesystem::exists(filePath))
-	{
-		std::cout << "File does not exist at path:" << filePath << std::endl;
-		return;
-	}
-
-	std::ifstream file(filePath);
-	if (!file)
-	{
-		std::cout << "File is empty: " << filePath << std::endl;
-		return;
-	}
-
-	try
-	{
-		nlohmann::json jsonData;
-		std::stringstream buffer;
-		buffer << file.rdbuf();
-		jsonData = nlohmann::json::parse(buffer.str());
-
-		SCF* scf = new SCF();
-		scf->fromJson(jsonData);
-		if (scf->isValid())
-		{
-			std::cout << "Successfully loaded SCF from:" << filePath << std::endl;
-			_localSCF = scf;
-		}
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << "Error parsing JSON" << e.what() << std::endl;
-	}
-	std::cout << "Loading SCF from local path" << std::endl;
 
 }
 
@@ -97,7 +76,19 @@ void DataManager::loadFromHTTP(const std::string& url)
 
 std::string DataManager::getAppDataPath()
 {
-	return nullptr;
+#ifdef _WIN32
+	// Windows: Use %APPDATA% or %LOCALAPPDATA%
+	char* appData = getenv("LOCALAPPDATA");
+	return appData ? std::string(appData) : "";
+#elif __APPLE__
+	// macOS: Use ~/Library/Application Support
+	const char* home = getenv("HOME");
+	return home ? std::string(home) + "/Library/Application Support" : "";
+#else
+	// Linux: Use ~/.local/share
+	const char* home = getenv("HOME");
+	return home ? std::string(home) + "/.local/share" : "";
+#endif
 }
 
 

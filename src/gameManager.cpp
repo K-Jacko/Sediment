@@ -7,19 +7,40 @@ GameManager::GameManager()
 
 }
 
+GameManager::~GameManager()
+{
+
+}
+
 GameManager* GameManager::Instance()
 {
 	if (_instance == nullptr)
 	{
+		std::cout << "Creating new GameManager Instance" << std::endl;
 		_instance = new GameManager();
 	}
 	return _instance;
 };
 
-void GameManager::Initialize()
+void GameManager::Start()
 {
-	_dataManager->Initialize();
-	_windowManager->Initialize();
+	std::cout << "Engine Launching" << std::endl;
+	if (_dataManager->Initialize())
+	{
+		if (_windowManager->Initialize())
+		{
+
+		}
+		else
+		{
+			Stop();
+		}
+	}
+	else
+	{
+		std::cout << "DataManager Failed to Initialize!" << std::endl;
+		Stop();
+	}
 	//Window Manager
 	//Input Manager
 	//Asset Manager Can be split it "management" and "factory"
@@ -28,6 +49,12 @@ void GameManager::Initialize()
 	//Config Manager
 
 };
+
+void GameManager::Stop()
+{
+	std::cout << "Stopping Engine!" << std::endl;
+	_isRunning = false;
+}
 
 
 

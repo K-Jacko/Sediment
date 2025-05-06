@@ -3,10 +3,10 @@
 class IFactory
 {
 public:
-	IFactory();
+	IFactory(){};
 	virtual ~IFactory(){}
 
 private:
-	virtual void Build();
-	virtual void Destroy();
+	virtual void Build(){};
+	virtual void Destroy(){};
 };
