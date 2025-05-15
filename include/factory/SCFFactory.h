@@ -27,7 +27,7 @@ public:
     ~SCFFactory() override {};
     nlohmann::json loadJSONFromFile(const std::string& path);
     bool loadJSONFromRemote();
-    SCF* createSCF(const std::string& path);
+    std::unique_ptr<SCF> createSCF(const std::string& path);
 
 private:
 };

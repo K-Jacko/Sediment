@@ -44,13 +44,9 @@ SCF::SCF()
     assetDetails = AssetDetails();
 }
 
-SCF::~SCF()
-{
-}
-
 nlohmann::json ScreenDetail::toJson() const
 {
-    return {{"resolutionWidth", _resolutionWidth},{"resolutionHeight", _resolutionHeight},{"positionX", _positionX},{"positionY", _positionY},{"title", name}};
+    return {{"resolutionWidth", _resolutionWidth},{"resolutionHeight", _resolutionHeight},{"positionX", _positionX},{"positionY", _positionY},{"title", title}};
 }
 
 void ScreenDetail::fromJson(const nlohmann::json& json)
@@ -64,7 +60,7 @@ void ScreenDetail::fromJson(const nlohmann::json& json)
     if (json.contains("positionY"))
         _positionY = json.at("positionY").get<int>();
     if (json.contains("title"))
-        name = json.at("title").get<std::string>();
+        title = json.at("title").get<std::string>();
     if (json.contains("id"))
         _id = json.at("id").get<std::string>();
 }

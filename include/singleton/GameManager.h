@@ -15,8 +15,8 @@ public:
   void Stop();
   bool _isRunning = false;
 
-  DataManager* _dataManager = DataManager::Instance();
-  WindowManager* _windowManager = WindowManager::Instance();
+  DataManager* _dataManager = nullptr;
+  WindowManager* _windowManager = nullptr;
   private:
 
   static GameManager* _instance;

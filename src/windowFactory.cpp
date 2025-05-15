@@ -3,6 +3,16 @@
 #include <object/Window.h>
 #include "factory/WindowFactory.h"
 
+WindowFactory::WindowFactory()
+{
+
+}
+
+WindowFactory::~WindowFactory()
+{
+
+}
+
 Window* WindowFactory::CreateSDLWindow(const std::string& name, unsigned int width, unsigned int height, bool fullscreen, bool hidden, bool borderless, bool resizable, bool vsync)
 {
 	Uint32 flags = 0;
@@ -13,7 +23,7 @@ Window* WindowFactory::CreateSDLWindow(const std::string& name, unsigned int wid
 
 	Window* window = new Window();
 	if (!window->Initialize(name, width, height,flags))
-	{
+{
 		delete window;
 		std::cerr << "Failed to create window" << std::endl;
 		return nullptr;

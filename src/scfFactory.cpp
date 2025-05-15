@@ -40,14 +40,14 @@ bool SCFFactory::loadJSONFromRemote()
     //TODO: This will ping my api and get back a remotely stored SCF. Make sure the PayloadData includes an APPID
 }
 
-SCF* SCFFactory::createSCF(const std::string& path)
+std::unique_ptr<SCF> SCFFactory::createSCF(const std::string& path)
 {
     // Check if path is url or folder path
     // if path, loadJSONFromFile else loadFromRemote
     nlohmann::json scfJson = loadJSONFromFile(path);
     if (scfJson != nullptr)
     {
-        auto scf = new SCF();
+        auto scf = std::make_unique<SCF>();
         scf->fromJson(scfJson);
         if (scf->isValid())
         {

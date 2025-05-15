@@ -6,8 +6,7 @@ DataManager::DataManager()
 {
 	_scfFactory = std::make_unique<SCFFactory>();
 	_localSCF = nullptr;
-	_volatile_SCF = nullptr;
-	_persistent_SCF = nullptr;
+	_backupSCF = nullptr;
 }
 
 DataManager::~DataManager()
@@ -20,9 +19,8 @@ DataManager* DataManager::Instance()
 	{
 		std::cout << "Creating new DataManager Instance" << std::endl;
 		_instance = new DataManager();
-		return _instance;
 	}
-	return nullptr;
+	return _instance;
 }
 
 bool DataManager::Initialize()
@@ -46,12 +44,12 @@ bool DataManager::Initialize()
 	}
 	else
 	{
-		std::cout << "Local SCF not found at " + localSCFPath +  ". looking for Persistent SCF... " << std::endl ;
-		std::string persistentPath =  localPath + "\\PSCF.json";
+		std::cout << "Local SCF not found at " + localSCFPath +  ". looking for Backup SCF... " << std::endl ;
+		std::string backupPath =  localPath + "\\PSCF.json";
 
-		if (fileExists(persistentPath))
+		if (fileExists(backupPath))
 		{
-			SCF* persistentConfig = _scfFactory->createSCF(localSCFPath);
+			_backupSCF = _scfFactory->createSCF(localSCFPath);
 			return true;
 
 		}
@@ -74,6 +72,11 @@ void DataManager::loadFromHTTP(const std::string& url)
 
 }
 
+SCF* DataManager::getSCF()
+{
+	return _localSCF.get();
+}
+
 std::string DataManager::getAppDataPath()
 {
 #ifdef _WIN32
@@ -89,15 +92,6 @@ std::string DataManager::getAppDataPath()
 	const char* home = getenv("HOME");
 	return home ? std::string(home) + "/.local/share" : "";
 #endif
-}
-
-
-const nlohmann::json& DataManager::getData()
-{
-	// if (!_volKCF.isEmpty()) return _volKCF.getJson();
-	// if (!_localKCF.isEmpty()) return _localKCF.getJson();
-	// return _backupKCF.getJson();
-	return nullptr;
 }
 
 bool DataManager::fileExists(const std::string& filePath)

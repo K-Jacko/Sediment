@@ -25,11 +25,13 @@ GameManager* GameManager::Instance()
 void GameManager::Start()
 {
 	std::cout << "Engine Launching" << std::endl;
+	_dataManager = DataManager::Instance();
 	if (_dataManager->Initialize())
 	{
+		_windowManager = WindowManager::Instance();
 		if (_windowManager->Initialize())
 		{
-
+			_isRunning = true;
 		}
 		else
 		{

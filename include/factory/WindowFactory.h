@@ -5,7 +5,7 @@
 class WindowFactory : public IFactory
 {
 public:
-	WindowFactory() = default;
+	WindowFactory();
 	~WindowFactory() override;
 	static Window* CreateSDLWindow(const std::string& name, unsigned int width, unsigned int height, bool fullscreen, bool hidden, bool borderless, bool resizable, bool vsync);
 };

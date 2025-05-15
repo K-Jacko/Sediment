@@ -1,6 +1,7 @@
 #pragma once
 #include "interface/IManager.h"
 #include "factory/WindowFactory.h"
+#include "singleton/DataManager.h"
 #include <object/SCF.h>
 
 

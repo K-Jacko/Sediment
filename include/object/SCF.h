@@ -58,7 +58,7 @@ public:
     std::string getID();
     nlohmann::json toJson() const;
     void fromJson(const nlohmann::json& json);
-    std::string name;
+    std::string title;
     ScreenFlags flags;
 private:
     std::string _id;
@@ -80,7 +80,7 @@ class SCF
 {
 public:
     SCF();
-    ~SCF();
+    ~SCF() = default;
     std::string getName() const;
     std::string getID() const;
     DisplayDetails displayDetails;

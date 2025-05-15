@@ -20,13 +20,12 @@ public:
 	bool Initialize() override;
 	void loadSCFFromFile(const std::string& filePath);
 	void loadFromHTTP(const std::string& url);
-	const nlohmann::json& getData();
+	SCF* getSCF();
 	bool fileExists(const std::string& filePath);
 	std::string getAppDataPath();
 private:
 	static DataManager* _instance;
 	std::unique_ptr<SCFFactory> _scfFactory;
-	SCF* _localSCF;
-	SCF* _volatile_SCF;
-	SCF* _persistent_SCF;
+	std::unique_ptr<SCF> _localSCF;
+	std::unique_ptr<SCF> _backupSCF;
 };

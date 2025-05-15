@@ -26,6 +26,7 @@ bool Window::Initialize(std::string name, unsigned int width, unsigned int heigh
 		width,
 		height,
 		flags
+
 		);
 	if (!_sdl_window) return false;
 

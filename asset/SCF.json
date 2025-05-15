@@ -2,22 +2,24 @@
   "id": "08d1bd4f-0fc0-4196-ac73-8e1cab344150",
   "name": "Sediment_Game",
   "display_details": {
-    "screen_details": {
-      "title": "Sediment",
-      "resolution_width": 1920,
-      "resolution_height": 1080,
-      "positionX": 0,
-      "positionY": 0,
-      "flags": [
-        {
-          "fullscreen": true,
-          "hidden": false,
-          "borderless": false,
-          "resizeable": false,
-          "vsync": false
-        }
-      ]
-    }
+    "screen_details": [
+      {
+        "title": "Sediment",
+        "resolution_width": 1920,
+        "resolution_height": 1080,
+        "positionX": 0,
+        "positionY": 0,
+        "flags": [
+          {
+            "fullscreen": true,
+            "hidden": false,
+            "borderless": false,
+            "resizeable": false,
+            "vsync": false
+          }
+        ]
+      }
+    ]
   },
   "asset_details": [
     {
