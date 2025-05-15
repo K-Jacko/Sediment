@@ -25,6 +25,7 @@ public:
 	std::string getAppDataPath();
 private:
 	static DataManager* _instance;
+	const std::string _corporationPath = "\\WakeIndustries";
 	std::unique_ptr<SCFFactory> _scfFactory;
 	std::unique_ptr<SCF> _localSCF;
 	std::unique_ptr<SCF> _backupSCF;

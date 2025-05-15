@@ -28,7 +28,7 @@ bool DataManager::Initialize()
 	std::cout << "DataManager Initializing" << std::endl;
 
 	//TODO: Make sure to add GameName or OrgName to local file Dir
-	const std::string localPath = getAppDataPath() + "\\WakeIndustries";
+	const std::string localPath = getAppDataPath() + _corporationPath;
 	if (!std::filesystem::exists(localPath))
 	{
 		std::filesystem::create_directory(localPath);
@@ -45,17 +45,18 @@ bool DataManager::Initialize()
 	else
 	{
 		std::cout << "Local SCF not found at " + localSCFPath +  ". looking for Backup SCF... " << std::endl ;
-		std::string backupPath =  localPath + "\\PSCF.json";
+		std::string backupPath =  "asset/BSCF.json";
 
 		if (fileExists(backupPath))
 		{
-			_backupSCF = _scfFactory->createSCF(localSCFPath);
+			_backupSCF = _scfFactory->createSCF(backupPath);
+			std::cout << "Backup Config Loaded" + _backupSCF.get()->getName() << std::endl;
 			return true;
 
 		}
 		else
 		{
-			std::cout << "Persistent SCF File failed to load!" << std::endl;
+			std::cout << "Backup SCF File failed to load!" << std::endl;
 			return false;
 		}
 	}
@@ -74,6 +75,11 @@ void DataManager::loadFromHTTP(const std::string& url)
 
 SCF* DataManager::getSCF()
 {
+	if (_localSCF == NULL)
+	{
+		std::cout << "Non-existent SCF requested. Backup returned" << std::endl;
+		return _backupSCF.get();
+	}
 	return _localSCF.get();
 }
 
