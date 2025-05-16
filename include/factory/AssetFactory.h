@@ -5,7 +5,7 @@
 
 class AssetFactory : public IFactory
 {
-	void Build() override;
+
 	void Destroy() override;
 	AssetFactory();
 	~AssetFactory() override;
