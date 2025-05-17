@@ -24,27 +24,52 @@ bool WindowManager::Initialize()
 {
 	IManager::Initialize();
 	std::cout << "WindowManager Initializing" << std::endl;
+
 	SCF* data = DataManager::Instance()->getSCF();
 	if (!data->isValid())
 	{
-		std::cout << "SCF Data no valid!" << std::endl;
+		std::cout << "SCF Data not valid!" << std::endl;
+		return false;
 	}
 
-	Window* window = CreateSDLWindow(data->displayDetails.screen_details[0]);
+	auto window = CreateSDLWindow(data->displayDetails.screen_details[0]);
+	if (!window)
+	{
+		std::cerr << "Failed to create main window!" << std::endl;
+		return false;
+	}
 
 	return true;
 }
+
 
 Window* WindowManager::CreateSDLWindow(ScreenDetail data)
 {
 	if (_windows.find(data.title) == _windows.end())
 	{
 		std::cout << "Creating Window \"" << data.title << "\"" << std::endl;
-		Window* window = _windowFactory->CreateSDLWindow(data.title,  data.getScreenResolution()._x,  data.getScreenResolution()._y,  false,  false,  false,  true, true);
-		return window;
+
+		auto window = _windowFactory->CreateSDLWindow(
+			data.title,
+			data.getScreenResolution()._x,
+			data.getScreenResolution()._y,
+			false,
+			false,
+			false,
+			true,
+			true
+		);
+		if (!window) return nullptr;
+
+		Window* rawPtr = window.get();
+		_activeWindows.push_back(std::move(window));
+		_windows[data.title] = rawPtr;
+		return rawPtr;
 	}
+
 	return nullptr;
 }
+
 
 
 void WindowManager::OpenWindow()
