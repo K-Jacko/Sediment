@@ -11,7 +11,6 @@ public:
   WindowManager();
   ~WindowManager() override;
   static WindowManager* Instance();
-  explicit WindowManager(WindowFactory* factory);
   bool Initialize() override;
   Window* CreateSDLWindow(ScreenDetail details);
   void OpenWindow();

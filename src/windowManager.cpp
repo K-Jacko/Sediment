@@ -20,12 +20,6 @@ WindowManager* WindowManager::Instance()
 	return _instance;
 }
 
-WindowManager::WindowManager(WindowFactory* factory)
-	: _windowFactory(factory)
-{
-
-}
-
 bool WindowManager::Initialize()
 {
 	IManager::Initialize();
