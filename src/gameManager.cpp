@@ -43,6 +43,7 @@ void GameManager::Start()
 		std::cout << "DataManager Failed to Initialize!" << std::endl;
 		Stop();
 	}
+	std::cout << DataManager::Instance()->getSCF()->assetDetails.assets[0].name << std::endl;
 	//Window Manager
 	//Input Manager
 	//Asset Manager Can be split it "management" and "factory"

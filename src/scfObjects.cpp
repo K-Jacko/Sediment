@@ -82,9 +82,9 @@ std::string ScreenDetail::getID()
 
 void AssetDetails::fromJson(const nlohmann::json& json)
 {
-    if (json.contains("asset_details") && json["asset_details"].is_array()) {
+    if (json.contains("assets") && json["assets"].is_array()) {
         assets.clear();
-        for (const auto& asset_detail : json["asset_details"]) {
+        for (const auto& asset_detail : json["assets"]) {
             AssetDetail assetDetail;
             assetDetail.fromJson(asset_detail);
             assets.push_back(assetDetail);

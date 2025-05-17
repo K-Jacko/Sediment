@@ -19,10 +19,10 @@ public:
 class SpriteAsset : Asset
 {
 public:
-    SpriteAsset()
+    SpriteAsset(): resolution(Vector2Int(0, 0))
     {
-
     }
+
     Vector2Int resolution;
 };
 

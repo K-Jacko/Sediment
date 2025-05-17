@@ -21,20 +21,23 @@
       }
     ]
   },
-  "asset_details": [
-    {
-      "id": "d3528220-4dfd-474e-a875-ffc069f29ad9",
-      "name": "Sediment_Logo",
-      "path": "assets/Logo",
-      "type": 0,
-      "sizeInBytes": 200
-    },
-    {
-      "id": "8430fbbf-94e9-46cb-aef4-ef2e91547b2f",
-      "name": "Sediment_Logo",
-      "path": "assets/Logo",
-      "type": 0,
-      "sizeInBytes": 200
-    }
-  ]
+  "asset_details": {
+    "asset_pack_name": "base_assets_dev",
+    "assets": [
+      {
+        "id": "d3528220-4dfd-474e-a875-ffc069f29ad9",
+        "name": "Turret",
+        "path": "https://pub-516340093bf64cb6abe73d36fd0682b2.r2.dev/Turret.png",
+        "type": 0,
+        "size_in_bytes": 200
+      },
+      {
+        "id": "8430fbbf-94e9-46cb-aef4-ef2e91547b2f",
+        "name": "Sediment_Logo",
+        "path": "assets/Logo",
+        "type": 0,
+        "size_in_bytes": 200
+      }
+    ]
+  }
 }
