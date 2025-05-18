@@ -6,6 +6,8 @@
 #include <vector>
 #include <object/Vector2Int.h>
 #include <iostream>
+#include <SDL_stdinc.h>
+#include <SDL.h>
 
 
 class ScreenFlags
@@ -59,11 +61,14 @@ public:
     nlohmann::json toJson() const;
     void fromJson(const nlohmann::json& json);
     std::string title;
-    ScreenFlags flags;
+    Uint32 flags;
+    bool vsync;
 private:
     std::string _id;
-    int _resolutionWidth, _resolutionHeight = 0;
-    int _positionX, _positionY = 0;
+    int _resolutionWidth = 0;
+    int _resolutionHeight = 0;
+    int _positionX = 0;
+    int _positionY = 0;
 };
 
 class DisplayDetails

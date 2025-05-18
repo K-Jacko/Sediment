@@ -63,6 +63,28 @@ void ScreenDetail::fromJson(const nlohmann::json& json)
         title = json.at("title").get<std::string>();
     if (json.contains("id"))
         _id = json.at("id").get<std::string>();
+
+    flags = 0;
+    if (json.contains("flags"))
+    {
+        const auto& jsonFlags = json["flags"];
+
+        vsync = jsonFlags.value("vsync", false);
+
+        if (jsonFlags.value("fullscreen", false))
+            flags |= SDL_WINDOW_FULLSCREEN;
+        if (jsonFlags.value("borderless", false))
+            flags |= SDL_WINDOW_BORDERLESS;
+        if (jsonFlags.value("resizeable", false))
+            flags |= SDL_WINDOW_RESIZABLE;
+        if (jsonFlags.value("focused", false))
+        {
+            flags |= SDL_WINDOW_INPUT_FOCUS;
+            flags |= SDL_WINDOW_MOUSE_FOCUS;
+        }
+        flags |= SDL_WINDOW_INPUT_FOCUS;
+        flags |= SDL_WINDOW_MOUSE_GRABBED;
+    }
 }
 
 Vector2Int ScreenDetail::getScreenResolution()

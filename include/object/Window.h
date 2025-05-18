@@ -11,13 +11,15 @@ public:
 	Window(Window&& other) noexcept;
 	Window& operator=(Window&& other) noexcept;
 	~Window();
-	bool Initialize(std::string name, unsigned int width, unsigned int height, Uint32 flags);
+	bool Initialize(std::string name, unsigned int width, unsigned int height, Uint32 flags, bool vsync);
 	void SetWidth(unsigned int width);
 	void SetHeight(unsigned int height);
 	unsigned int GetWidth();
 	unsigned int GetHeight();
 	std::string WindowName = "";
 	std::string ID = "";
+	void ClearRenderer();
+	void PresentRenderer();
 private:
 	unsigned int _width = 0;
 	unsigned int _height = 0;

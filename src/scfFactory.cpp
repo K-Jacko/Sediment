@@ -32,12 +32,13 @@ nlohmann::json SCFFactory::loadJSONFromFile(const std::string& path)
     {
         std::cout << "Error parsing JSON" << e.what() << std::endl;
     }
-    std::cout << "Loading SCF from local path" << std::endl;
+    return nullptr;
 }
 
 bool SCFFactory::loadJSONFromRemote()
 {
     //TODO: This will ping my api and get back a remotely stored SCF. Make sure the PayloadData includes an APPID
+    return false;
 }
 
 std::unique_ptr<SCF> SCFFactory::createSCF(const std::string& path)
@@ -55,6 +56,6 @@ std::unique_ptr<SCF> SCFFactory::createSCF(const std::string& path)
         }
         return nullptr;
     }
-
+    return nullptr;
 };
 

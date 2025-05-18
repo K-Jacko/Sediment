@@ -42,6 +42,20 @@ bool WindowManager::Initialize()
 	return true;
 }
 
+void WindowManager::Update()
+{
+	IManager::Update();
+}
+
+void WindowManager::Draw()
+{
+	for (auto& window : _activeWindows)
+	{
+		window.get()->ClearRenderer();
+		window.get()->PresentRenderer();
+	}
+}
+
 
 Window* WindowManager::CreateSDLWindow(ScreenDetail data)
 {
@@ -53,11 +67,8 @@ Window* WindowManager::CreateSDLWindow(ScreenDetail data)
 			data.title,
 			data.getScreenResolution()._x,
 			data.getScreenResolution()._y,
-			false,
-			false,
-			false,
-			true,
-			true
+			data.flags,
+			data.vsync
 		);
 		if (!window) return nullptr;
 

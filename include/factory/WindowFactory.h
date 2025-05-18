@@ -8,5 +8,5 @@ class WindowFactory : public IFactory
 public:
 	WindowFactory();
 	~WindowFactory() override;
-	static std::unique_ptr<Window> CreateSDLWindow(const std::string& name, unsigned int width, unsigned int height, bool fullscreen, bool hidden, bool borderless, bool resizable, bool vsync);
+	static std::unique_ptr<Window> CreateSDLWindow(const std::string& name, unsigned int width, unsigned int height, Uint32 flags, bool vsync);
 };

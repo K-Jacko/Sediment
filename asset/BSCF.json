@@ -5,19 +5,17 @@
     "screen_details": [
       {
         "title": "Sediment",
-        "resolution_width": 1920,
-        "resolution_height": 1080,
+        "resolution_width": 860,
+        "resolution_height": 540,
         "positionX": 0,
         "positionY": 0,
-        "flags": [
-          {
-            "fullscreen": true,
-            "hidden": false,
-            "borderless": false,
-            "resizeable": false,
-            "vsync": false
-          }
-        ]
+        "flags": {
+          "fullscreen": false,
+          "borderless": false,
+          "resizeable": false,
+          "vsync": false,
+          "focused": false
+        }
       }
     ]
   },

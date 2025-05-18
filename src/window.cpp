@@ -15,9 +15,14 @@ Window::~Window()
 	}
 }
 
-bool Window::Initialize(std::string name, unsigned int width, unsigned int height, Uint32 flags)
+bool Window::Initialize(std::string name, unsigned int width, unsigned int height, Uint32 flags, bool vsync)
 {
 	WindowName = const_cast<char*>(name.c_str());
+
+	Uint32 rendererFlags = 0;
+	rendererFlags |= SDL_RENDERER_ACCELERATED;
+	if (vsync)
+		rendererFlags |= SDL_RENDERER_PRESENTVSYNC;
 
 	_sdl_window = SDL_CreateWindow(
 		WindowName.c_str(),
@@ -33,7 +38,7 @@ bool Window::Initialize(std::string name, unsigned int width, unsigned int heigh
 	_sdl_renderer = SDL_CreateRenderer(
 		_sdl_window,
 		-1,
-		SDL_RENDERER_ACCELERATED
+		rendererFlags
 		);
 	if (!_sdl_renderer)
 	{
@@ -53,6 +58,16 @@ void Window::SetWidth(unsigned int width){_width = width;}
 void Window::SetHeight(unsigned int height){_height = height;}
 unsigned int Window::GetWidth(){return _width;}
 unsigned int Window::GetHeight(){return _height;}
+
+void Window::ClearRenderer()
+{
+	SDL_RenderClear(_sdl_renderer);
+}
+
+void Window::PresentRenderer()
+{
+	SDL_RenderPresent(_sdl_renderer);
+}
 
 Window& Window::operator=(Window&& other) noexcept
 {
