@@ -1,6 +1,6 @@
-#include <iostream>
-#include <SDL.h>
+#define SDL_MAIN_HANDLED
 #include <singleton/GameManager.h>
+#include <cstdio>
 
 int main(int argc, char* args[])
 {

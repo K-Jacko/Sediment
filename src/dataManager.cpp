@@ -50,7 +50,7 @@ bool DataManager::Initialize()
 		if (fileExists(backupPath))
 		{
 			_backupSCF = _scfFactory->createSCF(backupPath);
-			std::cout << "Backup Config Loaded" + _backupSCF.get()->getName() << std::endl;
+			std::cout << "Backup Config Loaded: \"" + _backupSCF.get()->getName() << "\"" << std::endl;
 			return true;
 
 		}
@@ -75,20 +75,22 @@ void DataManager::loadFromHTTP(const std::string& url)
 
 SCF* DataManager::getSCF()
 {
-	if (_localSCF == NULL)
-	{
-		std::cout << "Non-existent SCF requested. Backup returned" << std::endl;
-		return _backupSCF.get();
-	}
-	return _localSCF.get();
+	if (_localSCF) return _localSCF.get();
+	if (_backupSCF) return _backupSCF.get();
+	std::cerr << "No SCF (local or backup) loaded." << std::endl;
+	return nullptr;
 }
 
 std::string DataManager::getAppDataPath()
 {
 #ifdef _WIN32
-	// Windows: Use %APPDATA% or %LOCALAPPDATA%
 	char* appData = getenv("LOCALAPPDATA");
-	return appData ? std::string(appData) : "";
+	if (appData) {
+		return std::string(appData);
+	} else {
+		std::cerr << "LOCALAPPDATA not set!" << std::endl;
+		return "";
+	}
 #elif __APPLE__
 	// macOS: Use ~/Library/Application Support
 	const char* home = getenv("HOME");
@@ -106,19 +108,3 @@ bool DataManager::fileExists(const std::string& filePath)
 	return std::filesystem::exists(filePath);
 }
 
-std::string getAppDataPath()
-{
-#ifdef _WIN32
-	char path[MAX_PATH];
-	if (SUCCEEDED( SHGetFolderPathA(NULL, CSIDL_LOCAL_APPDATA, NULL, 0, path))) {
-		return std::string(path) + "\\YourApp\\";
-	}
-#elif __APPLE__
-	return std::string(getenv("HOME")) + "/Library/Application Support/YourApp/";
-#elif __linux__
-	return std::string(getenv("HOME")) + "/.config/YourApp/";
-#else
-	return ""; // Unsupported OS
-#endif
-return "";
-}

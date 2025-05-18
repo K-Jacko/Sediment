@@ -1,37 +1,23 @@
-#include <cstdint>
-#include <string>
-#include "object/Vector2Int.h"
+#include "object/Asset.h"
 
-class Asset
+Asset::Asset()
 {
-public:
-    Asset()
-    {
-        // Calculate size
-        _id = "";
-        _name = "";
-    }
-    std::string _id;
-    std::string _name;
-    uint64_t _assetSizeInBytes;
-};
+    // Calculate size
+    id = "";
+    name = "";
+    _assetSizeInBytes = 0;
+}
 
-class SpriteAsset : Asset
+Asset::Asset(std::string name, std::string id): name(name), id(id)
 {
-public:
-    SpriteAsset(): resolution(Vector2Int(0, 0))
-    {
-    }
+}
 
-    Vector2Int resolution;
-};
-
-class AudioAsset : Asset
+SpriteAsset::SpriteAsset(): _resolution(0,0)
 {
-public:
-    AudioAsset()
-    {
 
-    }
+}
 
-};
+AudioAsset::AudioAsset()
+{
+
+}

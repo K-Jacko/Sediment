@@ -43,7 +43,6 @@ void GameManager::Start()
 		std::cout << "DataManager Failed to Initialize!" << std::endl;
 		Stop();
 	}
-	std::cout << DataManager::Instance()->getSCF()->assetDetails.assets[0].name << std::endl;
 	//Window Manager
 	//Input Manager
 	//Asset Manager Can be split it "management" and "factory"
@@ -67,10 +66,11 @@ void GameManager::Update()
 	//Instance().UpdateCamera();
 	//Instance().UpdateEverythingElse(){};
 	//Instance().UpdateCollision();
+	WindowManager::Instance()->Update();
 };
 
 void GameManager::Draw()
 {
-
+	WindowManager::Instance()->Draw();
 }
 
