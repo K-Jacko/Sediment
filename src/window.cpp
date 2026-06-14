@@ -1,3 +1,4 @@
+#include <iostream>
 #include <object/Window.h>
 
 
@@ -17,6 +18,8 @@ Window::~Window()
 
 bool Window::Initialize(std::string name, unsigned int width, unsigned int height, Uint32 flags, bool vsync)
 {
+	std::cout << "Window: " << name << " Initializing" << std::endl;
+
 	WindowName = const_cast<char*>(name.c_str());
 
 	Uint32 rendererFlags = 0;
@@ -33,7 +36,12 @@ bool Window::Initialize(std::string name, unsigned int width, unsigned int heigh
 		flags
 
 		);
-	if (!_sdl_window) return false;
+	if (!_sdl_window)
+	{
+		std::cout << "Window: " << name << " Failed to Initialize..." << std::endl;
+		std::cout << "sdl_window null" << std::endl;
+		return false;
+	}
 
 	_sdl_renderer = SDL_CreateRenderer(
 		_sdl_window,
@@ -44,6 +52,8 @@ bool Window::Initialize(std::string name, unsigned int width, unsigned int heigh
 	{
 		SDL_DestroyWindow(_sdl_window);
 		_sdl_window = nullptr;
+		std::cout << "Window: " << name << " Failed to Initialize..." << std::endl;
+		std::cout << "sdl_renderer null" << std::endl;
 		return false;
 	}
 	return true;
@@ -59,14 +69,15 @@ void Window::SetHeight(unsigned int height){_height = height;}
 unsigned int Window::GetWidth(){return _width;}
 unsigned int Window::GetHeight(){return _height;}
 
-void Window::ClearRenderer()
+void Window::Draw()
 {
 	SDL_RenderClear(_sdl_renderer);
+	SDL_RenderPresent(_sdl_renderer);
 }
 
-void Window::PresentRenderer()
+SDL_Renderer* Window::getRenderer()
 {
-	SDL_RenderPresent(_sdl_renderer);
+	return _sdl_renderer;
 }
 
 Window& Window::operator=(Window&& other) noexcept

@@ -3,6 +3,8 @@
 #include <singleton/DataManager.h>
 #include <singleton/WindowManager.h>
 
+#include "AssetManager.h"
+
 class GameManager : IManager
 {
 public:
@@ -17,6 +19,7 @@ public:
 
   DataManager* _dataManager = nullptr;
   WindowManager* _windowManager = nullptr;
+  AssetManager* _assetManager = nullptr;
   private:
 
   static GameManager* _instance;

@@ -23,6 +23,7 @@ public:
 enum AssetType
 {
     Texture,
+    Sprite,
     Shader,
     Audio
 };

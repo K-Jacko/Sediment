@@ -1,13 +1,13 @@
 {
   "id": "08d1bd4f-0fc0-4196-ac73-8e1cab344150",
-  "name": "Sediment_Game",
+  "name": "Sediment_Dev_Config",
   "display_details": {
     "screen_details": [
       {
         "title": "Sediment",
         "resolution_width": 860,
         "resolution_height": 540,
-        "positionX": 0,
+        "positionX": 100,
         "positionY": 0,
         "flags": {
           "fullscreen": false,

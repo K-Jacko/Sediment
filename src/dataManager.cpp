@@ -42,24 +42,20 @@ bool DataManager::Initialize()
 		_localSCF = _scfFactory->createSCF(localSCFPath);
 		return true;
 	}
-	else
+
+	std::cout << "Local SCF not found at " + localSCFPath +  ". looking for Backup SCF... " << std::endl ;
+	std::string backupPath =  "asset/BSCF.json";
+
+	if (fileExists(backupPath))
 	{
-		std::cout << "Local SCF not found at " + localSCFPath +  ". looking for Backup SCF... " << std::endl ;
-		std::string backupPath =  "asset/BSCF.json";
+		_backupSCF = _scfFactory->createSCF(backupPath);
+		std::cout << "Backup Config Loaded: \"" + _backupSCF.get()->getName() << "\"" << std::endl;
+		return true;
 
-		if (fileExists(backupPath))
-		{
-			_backupSCF = _scfFactory->createSCF(backupPath);
-			std::cout << "Backup Config Loaded: \"" + _backupSCF.get()->getName() << "\"" << std::endl;
-			return true;
-
-		}
-		else
-		{
-			std::cout << "Backup SCF File failed to load!" << std::endl;
-			return false;
-		}
 	}
+
+	std::cout << "Backup SCF File failed to load!" << std::endl;
+	return false;
 }
 
 void DataManager::loadSCFFromFile(const std::string& filePath)

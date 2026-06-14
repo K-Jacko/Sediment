@@ -32,7 +32,7 @@ bool WindowManager::Initialize()
 		return false;
 	}
 
-	auto window = CreateSDLWindow(data->displayDetails.screen_details[0]);
+	Window* window = CreateSDLWindow(data->displayDetails.screen_details[0]);
 	if (!window)
 	{
 		std::cerr << "Failed to create main window!" << std::endl;
@@ -49,20 +49,21 @@ void WindowManager::Update()
 
 void WindowManager::Draw()
 {
-	for (auto& window : _activeWindows)
+	for (const auto& [name, window] : _windows)
 	{
-		window.get()->ClearRenderer();
-		window.get()->PresentRenderer();
+		window->Draw();
 	}
 }
 
+Window* WindowManager::defaultWindow()
+{
+	return _windows[0].get();
+}
 
 Window* WindowManager::CreateSDLWindow(ScreenDetail data)
 {
 	if (_windows.find(data.title) == _windows.end())
 	{
-		std::cout << "Creating Window \"" << data.title << "\"" << std::endl;
-
 		auto window = _windowFactory->CreateSDLWindow(
 			data.title,
 			data.getScreenResolution()._x,
@@ -73,8 +74,7 @@ Window* WindowManager::CreateSDLWindow(ScreenDetail data)
 		if (!window) return nullptr;
 
 		Window* rawPtr = window.get();
-		_activeWindows.push_back(std::move(window));
-		_windows[data.title] = rawPtr;
+		_windows[data.title] = std::move(window);
 		return rawPtr;
 	}
 

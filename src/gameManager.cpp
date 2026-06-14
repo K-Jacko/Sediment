@@ -31,10 +31,22 @@ void GameManager::Start()
 		_windowManager = WindowManager::Instance();
 		if (_windowManager->Initialize())
 		{
-			_isRunning = true;
+			_assetManager = AssetManager::Instance();
+			if (_assetManager->Initialize())
+			{
+				_isRunning = true;
+				std::cout << "Engine Running" << std::endl;
+
+			}
+			else
+			{
+				std::cout << "AssetManager Failed to Initialize!" << std::endl;
+				Stop();
+			}
 		}
 		else
 		{
+			std::cout << "WindowManager Failed to Initialize!" << std::endl;
 			Stop();
 		}
 	}

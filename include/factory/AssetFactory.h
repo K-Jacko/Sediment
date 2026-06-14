@@ -10,5 +10,5 @@ class AssetFactory : public IFactory
 	AssetFactory();
 	~AssetFactory() override;
 public:
-	std::unique_ptr<Asset> CreateAsset(std::string assetID, std::string assetName);
+	static std::unique_ptr<Asset> CreateAsset(std::string assetID, std::string assetName);
 };

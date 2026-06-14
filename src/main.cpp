@@ -8,7 +8,6 @@ int main(int argc, char* args[])
     while (GameManager::Instance()->_isRunning)
     {
         GameManager::Instance()->Update();
-
         GameManager::Instance()->Draw();
     }
     return 0;
