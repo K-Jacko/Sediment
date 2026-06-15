@@ -1,5 +1,6 @@
 #include "DataManager.h"
 #include "singleton/AssetManager.h"
+#include "factory/TextureAssetFactory.h"
 
 AssetManager* AssetManager::_instance = 0;
 AssetManager::AssetManager()
@@ -22,8 +23,11 @@ AssetManager* AssetManager::Instance()
 }
 
 Asset* AssetManager::getAsset(const std::string assetID)
+
 {
-    return nullptr;
+    auto it = cache.find(assetID);
+    if (it == cache.end()) return nullptr;
+    return it->second.get();
 }
 
 bool AssetManager::Initialize()
@@ -33,32 +37,49 @@ bool AssetManager::Initialize()
     // vector to hold all the Assets
     std::cout << "AssetManager Initializing" << std::endl;
 
-    for (auto assetData : DataManager::Instance()->getSCF()->assetDetails.assets)
+    for (AssetDetail assetData : DataManager::Instance()->getSCF()->assetDetails.assets)
     {
         switch (assetData.type)
         {
         case Texture :
+          {
             // Texture Asset Factory
+            TextureAssetFactory factory;
+            auto tex = factory.createFromFile(assetData.id, assetData.name, assetData.path);
+            try {
+              cache.emplace(assetData.name, std::move(tex));
+              std::cout << "Asset :" << assetData.name << ": added to cache" << std::endl;
+            }
+            catch (const std::exception& e)
+            {
+              std::cout << "Error loading texture:" << e.what() << std::endl;
+            };
 
             break;
+          }
         case Sprite:
+          {
             // Sprite Asset Factory
-
             break;
+          }
         case Shader :
+          {
             //Shader Asset Factory
-
             break;
+          }
         case Audio :
+          {
             // Audio Asset Factory
-
             break;
+          }
         default :
+          {
             // Asset Factory + Debug
-
             break;
+          }
         }
     }
+
     return true;
 }
 

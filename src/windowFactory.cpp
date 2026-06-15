@@ -10,7 +10,7 @@ std::unique_ptr<Window> WindowFactory::CreateSDLWindow(
 	Uint32 flags,
 	bool vsync)
 {
-	std::cout << "Factory:: " << "Creating Window \"" << name << "\"" << std::endl;
+	std::cout << "Factory:: " << "creating window \"" << name << "\"" << std::endl;
 
 	auto window = std::make_unique<Window>();
 
@@ -18,7 +18,7 @@ std::unique_ptr<Window> WindowFactory::CreateSDLWindow(
 		std::cerr << "Failed to create window" << std::endl;
 		return nullptr;
 	}
-	std::cout << "Factory:: " << "Window: \"" << name << "\" Created!" << std::endl;
+	std::cout << "Factory:: " << "window \"" << name << "\" created!" << std::endl;
 
 	return window;
 }

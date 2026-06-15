@@ -12,6 +12,7 @@ public:
 	Window& operator=(Window&& other) noexcept;
 	~Window();
 	bool Initialize(std::string name, unsigned int width, unsigned int height, Uint32 flags, bool vsync);
+  void Update();
 	void Draw();
 	SDL_Renderer* getRenderer();
 	void SetWidth(unsigned int width);

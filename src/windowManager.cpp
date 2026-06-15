@@ -44,7 +44,11 @@ bool WindowManager::Initialize()
 
 void WindowManager::Update()
 {
-	IManager::Update();
+  for (const auto& [name, window] : _windows)
+	{
+		window->Update();
+	}
+
 }
 
 void WindowManager::Draw()

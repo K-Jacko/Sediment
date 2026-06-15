@@ -1,4 +1,6 @@
 #include <object/SCF.h>
+#include <SDL.h>
+#include <iostream>
 
 std::string SCF::getName() const
 {

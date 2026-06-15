@@ -1,13 +1,9 @@
 #pragma once
-#include <windows.h>
-#include <intrin.h>
 #include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
 #include <object/Vector2Int.h>
-#include <iostream>
 #include <SDL_stdinc.h>
-#include <SDL.h>
 
 
 class ScreenFlags

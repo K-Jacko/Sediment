@@ -6,9 +6,9 @@
 
 class AssetFactory : public IFactory
 {
+  public:
 	void Destroy() override;
 	AssetFactory();
 	~AssetFactory() override;
-public:
 	static std::unique_ptr<Asset> CreateAsset(std::string assetID, std::string assetName);
 };

@@ -18,7 +18,7 @@ Window::~Window()
 
 bool Window::Initialize(std::string name, unsigned int width, unsigned int height, Uint32 flags, bool vsync)
 {
-	std::cout << "Window: " << name << " Initializing" << std::endl;
+	std::cout << "Window " << ":" << name << ":" << " Initializing" << std::endl;
 
 	WindowName = const_cast<char*>(name.c_str());
 
@@ -38,7 +38,7 @@ bool Window::Initialize(std::string name, unsigned int width, unsigned int heigh
 		);
 	if (!_sdl_window)
 	{
-		std::cout << "Window: " << name << " Failed to Initialize..." << std::endl;
+		std::cout << "Window: " << ":" << name << ":" << " Failed to Initialize..." << std::endl;
 		std::cout << "sdl_window null" << std::endl;
 		return false;
 	}
@@ -52,15 +52,12 @@ bool Window::Initialize(std::string name, unsigned int width, unsigned int heigh
 	{
 		SDL_DestroyWindow(_sdl_window);
 		_sdl_window = nullptr;
-		std::cout << "Window: " << name << " Failed to Initialize..." << std::endl;
+		std::cout << "Window: " << ":" << name << ":" << " Failed to Initialize..." << std::endl;
 		std::cout << "sdl_renderer null" << std::endl;
 		return false;
 	}
 	return true;
 }
-
-
-
 
 Window::Window(Window&& other) noexcept{}
 
@@ -68,6 +65,8 @@ void Window::SetWidth(unsigned int width){_width = width;}
 void Window::SetHeight(unsigned int height){_height = height;}
 unsigned int Window::GetWidth(){return _width;}
 unsigned int Window::GetHeight(){return _height;}
+
+void Window::Update(){}
 
 void Window::Draw()
 {

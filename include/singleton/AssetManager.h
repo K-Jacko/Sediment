@@ -1,5 +1,6 @@
 #pragma once
 #include "interface/IManager.h"
+#include "object/Asset.h"
 
 class Asset;
 
@@ -15,7 +16,7 @@ public:
 
 private:
     static AssetManager* _instance;
+    std::unordered_map<std::string, std::unique_ptr<Asset>> cache;
 
 private:
-    //AssetFactory -> Detects what factory to use from asset type. Keep previous factory active until change
 };
