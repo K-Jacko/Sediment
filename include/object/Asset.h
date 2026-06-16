@@ -21,6 +21,7 @@ public:
     ~Asset() = default;
     Asset(std::string name, std::string id);
     std::string getName();
+    std::string getID();
 protected:
     std::string _id;
     std::string _name;

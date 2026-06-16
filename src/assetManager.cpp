@@ -44,8 +44,7 @@ bool AssetManager::Initialize()
         case Texture :
           {
             // Texture Asset Factory
-            TextureAssetFactory factory;
-            auto tex = factory.createFromFile(assetData.id, assetData.name, assetData.path);
+            auto tex = TextureAssetFactory::createFromFile(assetData.id, assetData.name, assetData.path);
             try {
               cache.emplace(assetData.name, std::move(tex));
               std::cout << "Asset :" << assetData.name << ": added to cache" << std::endl;

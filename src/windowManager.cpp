@@ -61,7 +61,12 @@ void WindowManager::Draw()
 
 Window* WindowManager::defaultWindow()
 {
-	return _windows[0].get();
+  if (_windows.empty())
+  {
+    return nullptr;
+  }
+
+  return _windows.begin()->second.get();
 }
 
 Window* WindowManager::CreateSDLWindow(ScreenDetail data)

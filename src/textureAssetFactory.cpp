@@ -1,5 +1,6 @@
 #include "WindowManager.h"
 #include "factory/TextureAssetFactory.h"
+#include <string>
 
 TextureAssetFactory::TextureAssetFactory(){}
 
@@ -7,7 +8,9 @@ std::unique_ptr<TextureAsset> TextureAssetFactory::createFromFile(std::string id
 {
     auto baseAsset = CreateAsset(id, name);
 
-    SDL_Surface* rawSurface = IMG_Load(path.c_str());
+    std::string fullPath = std::string(PROJECT_ROOT) + "/" + path;
+    SDL_Surface* rawSurface = IMG_Load(fullPath.c_str());
+
     if (rawSurface)
     {
         SDL_Texture* rawTexture = SDL_CreateTextureFromSurface(WindowManager::Instance()->defaultWindow()->getRenderer(), rawSurface);
@@ -21,6 +24,8 @@ std::unique_ptr<TextureAsset> TextureAssetFactory::createFromFile(std::string id
         SDL_Log("Failed to create texture: %s", SDL_GetError());
     }
     SDL_Log("Failed to load surface: %s", IMG_GetError());
+    
+    return nullptr;
 }
 
 TextureAssetFactory::~TextureAssetFactory(){}

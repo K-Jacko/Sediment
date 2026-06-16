@@ -25,14 +25,14 @@
       {
         "id": "d3528220-4dfd-474e-a875-ffc069f29ad9",
         "name": "Turret_B",
-        "path": "../asset/Turret_B.png",
+        "path": "asset/Turret_B.png",
         "type": 0,
         "size_in_bytes": 200
       },
       {
         "id": "8430fbbf-94e9-46cb-aef4-ef2e91547b2f",
         "name": "Sediment-Logo",
-        "path": "../asset/logo.ico",
+        "path": "asset/logo.ico",
         "type": 0,
         "size_in_bytes": 200
       }
