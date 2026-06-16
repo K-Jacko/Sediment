@@ -1,11 +1,9 @@
 #pragma once
 #include <memory>
 #include <iostream>
-#include <SDL_render.h>
-#include <SDL_surface.h>
 #include <string>
 #include "Vector2Int.h"
-#include <SDL_image.h>
+#include <cstdint>
 
 // The AssetsObjects need to only hold the data that an asset has
 // This means that the SDL_Texture shared_ptr will not be held here
@@ -30,15 +28,6 @@ protected:
 };
 
 ///
-
-class TextureAsset : public Asset
-{
-public:
-    TextureAsset(const std::string& id, const std::string& name, const std::string& path);
-private:
-    bool isSprite = false;
-    bool isCached = false;
-};
 
 ///
 

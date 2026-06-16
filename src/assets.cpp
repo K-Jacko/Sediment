@@ -23,15 +23,6 @@ std::string Asset::getID()
   return _id;
 }
 
-TextureAsset::TextureAsset(const std::string& id, const std::string& name, const std::string& path)
-{
-    _id = id;
-    _name = name;
-    // Check if asset exist at {LOCALAPPDATA}/name
-
-
-}
-
 SpriteAsset::SpriteAsset(): _resolution(0,0)
 {
 

@@ -1,11 +1,12 @@
 #pragma once
-#include <interface/IManager.h>
+#include "interface/IManager.h"
 #include <singleton/DataManager.h>
 #include <singleton/WindowManager.h>
+#include <object/World.h>
 
 #include "AssetManager.h"
 
-class GameManager : IManager
+class GameManager : public IManager
 {
 public:
   GameManager();
@@ -21,6 +22,6 @@ public:
   WindowManager* _windowManager = nullptr;
   AssetManager* _assetManager = nullptr;
   private:
-
   static GameManager* _instance;
+  std::unique_ptr<World> _world;
 };

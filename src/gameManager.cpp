@@ -35,6 +35,7 @@ void GameManager::Start()
 			if (_assetManager->Initialize())
 			{
 				_isRunning = true;
+        _world = std::make_unique<World>(); 
 				std::cout << "Engine Running" << std::endl;
 
 			}

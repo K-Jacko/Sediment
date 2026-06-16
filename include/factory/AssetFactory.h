@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <interface/IFactory.h>
-#include "object/Asset.h"
+#include "object/TextureAsset.h"
 #include "object/SCF.h"
 
 class AssetFactory : public IFactory

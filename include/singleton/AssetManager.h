@@ -1,10 +1,11 @@
 #pragma once
+#include <string>
+#include <unordered_map>
+#include <memory>
 #include "interface/IManager.h"
 #include "object/Asset.h"
 
-class Asset;
-
-class AssetManager : IManager
+class AssetManager : public IManager
 {
 public:
     AssetManager();
