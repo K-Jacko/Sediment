@@ -5,6 +5,21 @@ void World::addEntity(Entity e)
   _nextEntity++;
 }
 
+std::vector<World::Entity> World::getEntities()
+{
+  std::vector<Entity> entities;
+
+  auto& storage = _getComponentStorage();
+  entities.reserve(storage.size());
+
+  for (const auto& [entity, component] : storage)
+  {
+    entities.push_back(entity);
+  }
+
+  return entities;
+}
+
 template<typename T>
 void World::addComponentToEntity(Entity e, T component)
 {
@@ -14,7 +29,7 @@ void World::addComponentToEntity(Entity e, T component)
 template<typename T>
 bool World::has(Entity e)
 {
-  return _getComponentStorage<T>().find(e) != _getComponentStorage<T>().end();
+  return _getComponentStorage<T>().contains(e);
 }
 
 template<typename T>

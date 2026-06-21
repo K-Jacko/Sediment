@@ -3,12 +3,14 @@
 #include <vector>
 #include <cstdint>
 #include <memory>
+#include "components/Component.h"
 
-class World 
+class World
 {
   public:
     using Entity = uint32_t;
     void addEntity(Entity e);
+    std::vector<Entity> getEntities();
 
   template<typename T>
     void addComponentToEntity(Entity e, T component);
@@ -22,8 +24,6 @@ class World
   private:
     Entity _nextEntity = 0;
 
-    std::vector<Entity> entities;
-
-    template<typename T>
+    template<typename T = Component>
       std::unordered_map<Entity, T>& _getComponentStorage();
 };
