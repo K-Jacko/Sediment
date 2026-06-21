@@ -19,7 +19,7 @@ std::unique_ptr<TextureAsset> TextureAssetFactory::createFromFile(std::string id
         SDL_Texture* rawTexture = SDL_CreateTextureFromSurface(WindowManager::Instance()->defaultWindow()->getRenderer(), rawSurface);
         if (rawTexture)
         {
-            auto textureAsset = std::make_unique<TextureAsset>(id, name, path);
+            auto textureAsset = std::make_unique<TextureAsset>(rawTexture, id, name, path);
            // textureAsset->setTexture(rawTexture);
 
             return textureAsset;
