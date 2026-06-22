@@ -75,8 +75,8 @@ Window* WindowManager::CreateSDLWindow(ScreenDetail data)
 	{
 		auto window = _windowFactory->CreateSDLWindow(
 			data.title,
-			data.getScreenResolution()._x,
-			data.getScreenResolution()._y,
+			data.resolutionWidth,
+			data.resolutionHeight,
 			data.flags,
 			data.vsync
 		);

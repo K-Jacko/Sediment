@@ -2,16 +2,6 @@
 
 GameManager* GameManager::_instance = nullptr;
 
-GameManager::GameManager()
-{
-
-}
-
-GameManager::~GameManager()
-{
-
-}
-
 GameManager* GameManager::Instance()
 {
 	if (_instance == nullptr)
@@ -22,40 +12,40 @@ GameManager* GameManager::Instance()
 	return _instance;
 };
 
-void GameManager::Start()
+bool GameManager::Initialize()
 {
 	std::cout << "Engine Launching" << std::endl;
-	_dataManager = DataManager::Instance();
-	if (_dataManager->Initialize())
-	{
-		_windowManager = WindowManager::Instance();
-		if (_windowManager->Initialize())
-		{
-			_assetManager = AssetManager::Instance();
-			if (_assetManager->Initialize())
-			{
-				_isRunning = true;
-        _world = std::make_unique<World>(); 
-				std::cout << "Engine Running" << std::endl;
 
-			}
-			else
-			{
-				std::cout << "AssetManager Failed to Initialize!" << std::endl;
-				Stop();
-			}
-		}
-		else
-		{
-			std::cout << "WindowManager Failed to Initialize!" << std::endl;
-			Stop();
-		}
-	}
-	else
+	_dataManager = DataManager::Instance();
+	if (!_dataManager->Initialize())
 	{
 		std::cout << "DataManager Failed to Initialize!" << std::endl;
 		Stop();
+		return false;
 	}
+
+	_windowManager = WindowManager::Instance();
+	if (!_windowManager->Initialize())
+	{
+		std::cout << "WindowManager Failed to Initialize!" << std::endl;
+		Stop();
+		return false;
+	}
+
+	_assetManager = AssetManager::Instance();
+	if (!_assetManager->Initialize())
+	{
+		std::cout << "AssetManager Failed to Initialize!" << std::endl;
+		Stop();
+		return false;
+	}
+
+	_world = std::make_unique<World>();
+
+	_isRunning = true;
+	std::cout << "Engine Running" << std::endl;
+	return true;
+
 	//Window Manager
 	//Input Manager
 	//Asset Manager Can be split it "management" and "factory"

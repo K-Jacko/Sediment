@@ -3,45 +3,18 @@
 void World::addEntity(Entity e)
 {
   _nextEntity++;
+  _entities.push_back(e);
 }
 
-std::vector<World::Entity> World::getEntities()
+std::vector<Entity> World::getEntities()
 {
-  std::vector<Entity> entities;
+  return _entities;
+}
 
-  auto& storage = _getComponentStorage();
-  entities.reserve(storage.size());
-
-  for (const auto& [entity, component] : storage)
+void World::updateSystems()
+{
+  for (std::unique_ptr<ISystem>& sys : _systems)
   {
-    entities.push_back(entity);
+    sys->update();
   }
-
-  return entities;
 }
-
-template<typename T>
-void World::addComponentToEntity(Entity e, T component)
-{
-  _getComponentStorage<T>()[e] = component;
-}
-
-template<typename T>
-bool World::has(Entity e)
-{
-  return _getComponentStorage<T>().contains(e);
-}
-
-template<typename T>
-T& World::get(Entity e)
-{
-  return _getComponentStorage<T>().at(e);
-}
-
-template<typename T>
-std::unordered_map<World::Entity, T>& World::_getComponentStorage()
-{
-  static std::unordered_map<Entity, T> storage;
-  return storage;
-}
-

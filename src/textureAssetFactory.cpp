@@ -1,9 +1,9 @@
 #include "WindowManager.h"
 #include "factory/TextureAssetFactory.h"
 #include <string>
-#include <SDL2/SDL_surface.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_image.h>
+#include <SDL_surface.h>
+#include <SDL_render.h>
+#include <SDL_image.h>
 
 TextureAssetFactory::TextureAssetFactory(){}
 

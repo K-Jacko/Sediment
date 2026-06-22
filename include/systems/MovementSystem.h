@@ -3,5 +3,6 @@
 class MovementSystem : public ISystem
 {
   public:
-    run() override;
+    MovementSystem() = default;
+    void update() override;
 };

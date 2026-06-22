@@ -1,18 +1,15 @@
 #pragma once
 #include "interface/IManager.h"
-#include <singleton/DataManager.h>
-#include <singleton/WindowManager.h>
+#include "singleton/DataManager.h"
+#include "singleton/WindowManager.h"
+#include "singleton/AssetManager.h"
 #include <object/World.h>
-
-#include "AssetManager.h"
 
 class GameManager : public IManager
 {
 public:
-  GameManager();
-  ~GameManager() override;
   static GameManager* Instance();
-  void Start();
+  bool Initialize() override;
   void Update() override;
   void Draw();
   void Stop();

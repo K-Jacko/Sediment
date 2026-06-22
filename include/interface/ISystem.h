@@ -1,9 +1,8 @@
+#pragma once
 
-
-interface ISystem
+class ISystem
 {
   public:
-  ISystem();
-  ~ISystem();
-  virtual bool run();
-}
+  virtual ~ISystem() = default;
+  virtual void update(){};
+};

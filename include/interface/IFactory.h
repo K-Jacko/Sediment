@@ -3,8 +3,8 @@
 class IFactory
 {
 public:
-	IFactory(){};
-	virtual ~IFactory(){}
+	IFactory() = default;
+	virtual ~IFactory() = default;
 
 private:
 	virtual void Build(){};

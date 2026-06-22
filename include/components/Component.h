@@ -1,8 +1,9 @@
 #pragma once
 
-
 class Component
 {
 public:
-    unit32_t id = 0;
+    Component() = default;
+    ~Component() = default;
+    uint32_t id = 0;
 };

@@ -3,8 +3,7 @@
 class IManager
 {
 	public:
-	IManager(){}
-	virtual ~IManager(){};
+	virtual ~IManager() = default;
 	virtual bool Initialize(){ return false; }
 	virtual void Update(){}
 };

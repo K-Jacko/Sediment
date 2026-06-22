@@ -16,7 +16,7 @@ TextureAsset::TextureAsset(SDL_Texture* texture, const std::string& id, const st
     _texture = texture;
 }
 
-SDL_Texture* TextureAsset::getTexture()
+SDL_Texture* TextureAsset::getTexture() const
 {
   return _texture;
 }

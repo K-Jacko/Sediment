@@ -4,7 +4,7 @@
 
 int main(int argc, char* args[])
 {
-    GameManager::Instance()->Start();
+    GameManager::Instance()->Initialize();
     while (GameManager::Instance()->_isRunning)
     {
         GameManager::Instance()->Update();

@@ -24,10 +24,9 @@ class SCFFactory : public IFactory
     // Allow mocking or stubbing of config objects for testing purposes
 public:
     SCFFactory() = default;
-    ~SCFFactory() override {};
-    nlohmann::json loadJSONFromFile(const std::string& path);
-    bool loadJSONFromRemote();
-    std::unique_ptr<SCF> createSCF(const std::string& path);
+    static std::unique_ptr<SCF> createSCF(const std::string& path);
 
 private:
+    static nlohmann::json _loadJSONFromFile(const std::string& path);
+    static nlohmann::json _loadJSONFromRemote();
 };

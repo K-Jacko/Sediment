@@ -7,5 +7,6 @@ struct SpriteComponent : Component
 {
   uint32_t width = 0;
   uint32_t height = 0;
-  TextureAsset _texture;
+  SDL_Rect crop = {0 ,0, 0,0};
+  TextureAsset texture;
 };
