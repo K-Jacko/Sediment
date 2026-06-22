@@ -49,7 +49,7 @@ bool DataManager::Initialize()
 	if (fileExists(backupPath))
 	{
 		_backupSCF = _scfFactory->createSCF(backupPath);
-		std::cout << "Backup Config Loaded: \"" + _backupSCF.get()->getName() << "\"" << std::endl;
+		std::cout << "Backup Config Loaded: \"" + _backupSCF.get()->name << "\"" << std::endl;
 		return true;
 
 	}

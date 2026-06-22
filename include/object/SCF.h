@@ -2,33 +2,37 @@
 #include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
-#include <object/Vector2Int.h>
 #include <SDL_stdinc.h>
 
+#include "SCFObjects.h"
 
-class ScreenFlags
+struct SpriteTransform
 {
-public:
-    bool fullscreen;
-    bool hidden;
-    bool borderless;
-    bool resizable;
-    bool vsync;
+    int x = 0;
+    int y = 0;
+    int width = 0;
+    int height = 0;
+    void fromJson(const nlohmann::json& json);
 };
 
-enum AssetType
+struct SpriteDetail
 {
-    Texture,
-    Sprite,
-    Shader,
-    Audio
+    std::string id;
+    std::string name;
+    std::string texture;
+    SpriteTransform transform;
+    void fromJson(const nlohmann::json& json);
 };
 
-class AssetDetail
+struct SpriteDetails
 {
-public:
-    AssetDetail() = default;
-    ~AssetDetail() = default;
+    std::vector<std::string> dependencies;
+    std::vector<SpriteDetail> sprites;
+    void fromJson(const nlohmann::json& json);
+};
+
+struct AssetDetail
+{
     std::string id;
     std::string name;
     std::string path;
@@ -37,61 +41,43 @@ public:
     void fromJson(const nlohmann::json& json);
 };
 
-class AssetDetails
+struct AssetDetails
 {
-public:
-    AssetDetails() = default;
-    ~AssetDetails() = default;
     std::string asset_pack_name;
     std::vector<AssetDetail> assets;
     void fromJson(const nlohmann::json& json);
 };
 
-class ScreenDetail
+struct ScreenDetail
 {
-public:
-    ScreenDetail() = default;
-    ~ScreenDetail() = default;
-    Vector2Int getScreenResolution();
-    Vector2Int getScreenPosition();
-    std::string getID();
     nlohmann::json toJson() const;
     void fromJson(const nlohmann::json& json);
     std::string title;
     Uint32 flags;
     bool vsync;
-private:
-    std::string _id;
-    int _resolutionWidth = 0;
-    int _resolutionHeight = 0;
-    int _positionX = 0;
-    int _positionY = 0;
+    std::string id;
+    int resolutionWidth = 0;
+    int resolutionHeight = 0;
+    int positionX = 0;
+    int positionY = 0;
 };
 
-class DisplayDetails
+struct DisplayDetails
 {
-public:
-    DisplayDetails() = default;
-    ~DisplayDetails() = default;
     std::vector<ScreenDetail> screen_details;
     void fromJson(const nlohmann::json& json);
-
 };
 
-class SCF
+struct SCF
 {
-public:
-    SCF();
-    ~SCF() = default;
-    std::string getName() const;
-    std::string getID() const;
+    std::string id;
+    std::string name;
     DisplayDetails displayDetails;
     AssetDetails assetDetails;
+    SpriteDetails spriteDetails;
     bool isValid() const {return _initialized;}
     void fromJson(const nlohmann::json& json);
 
 private:
-    bool _initialized;
-    std::string _id;
-    std::string _name;
+    bool _initialized = false;
 };

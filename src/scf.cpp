@@ -2,28 +2,20 @@
 #include <SDL.h>
 #include <iostream>
 
-std::string SCF::getName() const
-{
-    return _name;
-}
-
-std::string SCF::getID() const
-{
-    return _id;
-}
-
 void SCF::fromJson(const nlohmann::json& json)
 {
     if (json.contains("id") && json["id"].is_string())
-            _id = json.at("id");
+        id = json.at("id");
     if (json.contains("name") && json["name"].is_string())
-        _name = json.at("name");
+        name = json.at("name");
     if (json.contains("display_details") && json["display_details"].is_object())
         displayDetails.fromJson(json["display_details"]);
     if (json.contains("asset_details") && json["asset_details"].is_object())
         assetDetails.fromJson(json["asset_details"]);
+    if (json.contains("sprite_details") && json["sprite_details"].is_object())
+        spriteDetails.fromJson(json["sprite_details"]);
 
-    _initialized = !_id.empty() && !_name.empty();
+    _initialized = !id.empty() && !name.empty();
 }
 
 void DisplayDetails::fromJson(const nlohmann::json& json) {
@@ -37,34 +29,26 @@ void DisplayDetails::fromJson(const nlohmann::json& json) {
     }
 }
 
-SCF::SCF()
-{
-    _initialized = false;
-    _id = "";
-    _name = "";
-    displayDetails = DisplayDetails();
-    assetDetails = AssetDetails();
-}
 
 nlohmann::json ScreenDetail::toJson() const
 {
-    return {{"resolutionWidth", _resolutionWidth},{"resolutionHeight", _resolutionHeight},{"positionX", _positionX},{"positionY", _positionY},{"title", title}};
+    return {{"resolutionWidth", resolutionWidth},{"resolutionHeight", resolutionHeight},{"positionX", positionX},{"positionY", positionY},{"title", title}};
 }
 
 void ScreenDetail::fromJson(const nlohmann::json& json)
 {
     if (json.contains("resolution_width"))
-        _resolutionWidth = json.at("resolution_width").get<int>();
+        resolutionWidth = json.at("resolution_width").get<int>();
     if (json.contains("resolution_height"))
-        _resolutionHeight = json.at("resolution_height").get<int>();
+        resolutionHeight = json.at("resolution_height").get<int>();
     if (json.contains("positionX"))
-        _positionX = json.at("positionX").get<int>();
+        positionX = json.at("positionX").get<int>();
     if (json.contains("positionY"))
-        _positionY = json.at("positionY").get<int>();
+        positionY = json.at("positionY").get<int>();
     if (json.contains("title"))
         title = json.at("title").get<std::string>();
     if (json.contains("id"))
-        _id = json.at("id").get<std::string>();
+        id = json.at("id").get<std::string>();
 
     flags = 0;
     if (json.contains("flags"))
@@ -87,21 +71,6 @@ void ScreenDetail::fromJson(const nlohmann::json& json)
         flags |= SDL_WINDOW_INPUT_FOCUS;
         flags |= SDL_WINDOW_MOUSE_GRABBED;
     }
-}
-
-Vector2Int ScreenDetail::getScreenResolution()
-{
-    return Vector2Int(_resolutionWidth, _resolutionHeight);
-}
-
-Vector2Int ScreenDetail::getScreenPosition()
-{
-    return Vector2Int(_positionX, _positionY);
-}
-
-std::string ScreenDetail::getID()
-{
-    return _id;
 }
 
 void AssetDetails::fromJson(const nlohmann::json& json)
@@ -131,5 +100,48 @@ void AssetDetail::fromJson(const nlohmann::json& json)
 
     if (!id.empty() && !name.empty() && path.empty() && sizeInBytes < 0)
         std::cout << "Error parsing Asset detail from Json" << std::endl;
+}
 
+void SpriteDetails::fromJson(const nlohmann::json& json)
+{
+    if (json.contains("dependencies") && json["dependencies"].is_array()) {
+        dependencies.clear();
+        for (const auto& asset_detail : json["dependencies"]) {
+            std::string dep;
+            dependencies.push_back(dep);
+        }
+    };
+
+    if (json.contains("sprites") && json["sprites"].is_array()) {
+        sprites.clear();
+        for (const auto& asset_detail : json["sprites"]) {
+            SpriteDetail spriteDetail;
+            spriteDetail.fromJson(asset_detail);
+            sprites.push_back(spriteDetail);
+        }
+    };
+}
+
+void SpriteDetail::fromJson(const nlohmann::json& json)
+{
+    if (json.contains("id") && json.at("id").is_string())
+        id = json.at("id");
+    if (json.contains("name") && json.at("name").is_string())
+        name = json.at("name");
+    if (json.contains("texture") && json.at("texture").is_string())
+        texture = json.at("texture");
+    if (json.contains("transform"))
+        transform.fromJson(json["transform"]);
+}
+
+void SpriteTransform::fromJson(const nlohmann::json& json)
+{
+    if (json.contains("x") )
+        x = json.at("x");
+    if (json.contains("y"))
+        y = json.at("y");
+    if (json.contains("width"))
+        width = json.at("width");
+    if (json.contains("height"))
+        height = json.at("height");
 }

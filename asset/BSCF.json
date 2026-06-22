@@ -37,5 +37,24 @@
         "size_in_bytes": 200
       }
     ]
+  },
+  "sprite_details": {
+    "dependencies": [
+      "base_assets_dev"
+    ],
+    "sprites": [
+      {
+        "id": "",
+        "name": "",
+        "texture": "",
+        "transform":
+        {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        }
+      }
+    ]
   }
 }
