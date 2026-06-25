@@ -6,6 +6,15 @@
 
 #include "SCFObjects.h"
 
+struct SpriteCrop
+{
+    int x = 0;
+    int y = 0;
+    int width = 0;
+    int height = 0;
+    void fromJson(const nlohmann::json& json);
+};
+
 struct SpriteTransform
 {
     int x = 0;
@@ -21,6 +30,7 @@ struct SpriteDetail
     std::string name;
     std::string texture;
     SpriteTransform transform;
+    SpriteCrop crop;
     void fromJson(const nlohmann::json& json);
 };
 

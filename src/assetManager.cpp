@@ -1,6 +1,5 @@
 #include "DataManager.h"
 #include "singleton/AssetManager.h"
-#include "factory/TextureAssetFactory.h"
 
 AssetManager* AssetManager::_instance = 0;
 AssetManager::AssetManager()
@@ -22,13 +21,22 @@ AssetManager* AssetManager::Instance()
     return _instance;
 }
 
-Asset* AssetManager::getAsset(const std::string assetID)
-
+Asset* AssetManager::getAsset(const std::string id)
 {
-    auto it = cache.find(assetID);
-    if (it == cache.end()) return nullptr;
-    return it->second.get();
+  auto it = _cache.find(id);
+  if (it == _cache.end()) return nullptr;
+  return it->second.get();
 }
+
+TextureAsset* AssetManager::getTexture(const std::string id)
+{
+  auto it = _textureAssetCache.find(id);
+  if (it == _textureAssetCache.end())
+    return nullptr;
+
+  return it->second.get();
+}
+
 
 bool AssetManager::Initialize()
 {
@@ -46,7 +54,7 @@ bool AssetManager::Initialize()
             // Texture Asset Factory
             auto tex = TextureAssetFactory::createFromFile(assetData.id, assetData.name, assetData.path);
             try {
-              cache.emplace(assetData.name, std::move(tex));
+              _textureAssetCache.emplace(assetData.name, std::move(tex));
               std::cout << "Asset :" << assetData.name << ": added to cache" << std::endl;
             }
             catch (const std::exception& e)

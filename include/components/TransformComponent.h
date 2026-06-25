@@ -4,17 +4,26 @@
 
 struct TransformComponent : Component
 {
-  int x;
-  int y;
-  int width;
-  int height;
-  SDL_Rect* rect() const
+  TransformComponent(int x, int y)
   {
-    SDL_Rect* rect = new SDL_Rect;
-    rect->x = x;
-    rect->y = y;
-    rect->w = width;
-    rect->h = height;
-    return rect;
-  }
+    _x = x;
+    _y = y;
+  };
+  TransformComponent(int x, int y, int width, int height)
+  {
+    _x = x;
+    _y = y;
+    _width = width;
+    _height = height;
+    rect.x = x;
+    rect.y = y;
+    rect.w = width;
+    rect.h = height;
+
+  };
+  int _width;
+  int _height;
+  int _x;
+  int _y;
+  SDL_Rect rect;
 };

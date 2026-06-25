@@ -1,5 +1,7 @@
 #include <singleton/GameManager.h>
 
+#include "systems/RenderSystem.h"
+
 GameManager* GameManager::_instance = nullptr;
 
 GameManager* GameManager::Instance()
@@ -41,6 +43,8 @@ bool GameManager::Initialize()
 	}
 
 	_world = std::make_unique<World>();
+	_world->addSystem<RenderSystem>(_world.get(), _windowManager->defaultWindow()->getRenderer());
+	_world->start();
 
 	_isRunning = true;
 	std::cout << "Engine Running" << std::endl;
@@ -53,7 +57,7 @@ bool GameManager::Initialize()
 	//Entity Manager // Can be split into a management class and a factory.
 	//Config Manager
 
-};
+}
 
 void GameManager::Stop()
 {
@@ -70,6 +74,7 @@ void GameManager::Update()
 	//Instance().UpdateEverythingElse(){};
 	//Instance().UpdateCollision();
 	WindowManager::Instance()->Update();
+	_world->updateSystems();
 };
 
 void GameManager::Draw()

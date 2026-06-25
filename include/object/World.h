@@ -1,11 +1,13 @@
 #pragma once
 #include <unordered_map>
 #include <vector>
-#include <cstdint>
 #include <memory>
 #include "Entity.h"
-#include "components/Component.h"
 #include "interface/ISystem.h"
+#include "components/SpriteComponent.h"
+#include "AssetManager.h"
+#include "DataManager.h"
+
 
 class World
 {
@@ -13,23 +15,32 @@ class World
     void addEntity(Entity e);
     std::vector<Entity> getEntities();
     void updateSystems();
+    void start();
+
+  template<typename T, typename... Args>
+  void addSystem(Args&&... args)
+  {
+    _systems.push_back(std::make_unique<T>(std::forward<Args>(args)...));
+    std::cout << "System " << typeid(T).name() << " Added to world" << std::endl;
+  }
 
   template<typename T>
     void addComponentToEntity(Entity e, T component)
     {
-      _getComponentStorage<T>()[e] = component;
+      _getComponentStorage<T>().emplace(e.id, std::move(component));
+      std::cout << "Component " << typeid(T).name() << " Added to entity " << e.id << std::endl;
     }
 
   template<typename T>
     bool has(Entity e)
     {
-      return _getComponentStorage<T>().contains(e);
+      return _getComponentStorage<T>().contains(e.id);
     }
 
   template<typename T>
     T& get(Entity e)
     {
-      return _getComponentStorage<T>().at(e);
+      return _getComponentStorage<T>().at(e.id);
     }
 
   template<typename T>

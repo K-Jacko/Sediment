@@ -1,12 +1,23 @@
 #pragma once
-#include <cstdint>
+#include <SDL.h>
 #include "Component.h"
-#include "object/TextureAsset.h"
+
+class TextureAsset;
 
 struct SpriteComponent : Component
 {
-  uint32_t width = 0;
-  uint32_t height = 0;
-  SDL_Rect crop = {0 ,0, 0,0};
-  TextureAsset texture;
+  SpriteComponent(TextureAsset* tex, SDL_Rect rec) : texture(tex)
+  {
+    rect = rec;
+    x = rec.x;
+    y = rec.y;
+    width = rec.w;
+    height = rec.h;
+  };
+  int width;
+  int height;
+  int x;
+  int y;
+  TextureAsset* texture;
+  SDL_Rect rect;
 };

@@ -70,8 +70,8 @@ void Window::Update(){}
 
 void Window::Draw()
 {
-	SDL_RenderClear(_sdl_renderer);
 	SDL_RenderPresent(_sdl_renderer);
+	SDL_RenderClear(_sdl_renderer);
 }
 
 SDL_Renderer* Window::getRenderer()

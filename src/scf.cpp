@@ -132,6 +132,8 @@ void SpriteDetail::fromJson(const nlohmann::json& json)
         texture = json.at("texture");
     if (json.contains("transform"))
         transform.fromJson(json["transform"]);
+    if (json.contains("crop"))
+        crop.fromJson(json["crop"]);
 }
 
 void SpriteTransform::fromJson(const nlohmann::json& json)
@@ -145,3 +147,16 @@ void SpriteTransform::fromJson(const nlohmann::json& json)
     if (json.contains("height"))
         height = json.at("height");
 }
+
+void SpriteCrop::fromJson(const nlohmann::json& json)
+{
+    if (json.contains("x") )
+        x = json.at("x");
+    if (json.contains("y"))
+        y = json.at("y");
+    if (json.contains("width"))
+        width = json.at("width");
+    if (json.contains("height"))
+        height = json.at("height");
+}
+

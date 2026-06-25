@@ -18,9 +18,9 @@ void RenderSystem::update()
   {
     SDL_RenderCopy(
         _renderer,
-        spriteComponents[i].texture.getTexture(),
-        &spriteComponents[i].crop,
-        transformComponents[i].rect()
+        spriteComponents[i].texture->getTexture(),
+        &spriteComponents[i].rect,
+        &transformComponents[i].rect
       );
   }
 }
