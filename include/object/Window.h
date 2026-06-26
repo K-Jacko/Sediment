@@ -5,20 +5,20 @@
 class Window
 {
 public:
-	Window() : _width(800), _height(600),_positionX(100),_positionY(100) {};
+	Window(int width, int height) : _width(width), _height(height){};
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
 	Window(Window&& other) noexcept;
 	Window& operator=(Window&& other) noexcept;
 	~Window();
-	bool Initialize(std::string name, unsigned int width, unsigned int height, Uint32 flags, bool vsync);
+	bool Initialize(std::string name, Uint32 flags, bool vsync);
   void Update();
 	void Draw();
 	SDL_Renderer* getRenderer();
-	void SetWidth(unsigned int width);
-	void SetHeight(unsigned int height);
-	unsigned int GetWidth();
-	unsigned int GetHeight();
+	void SetWidth(int width);
+	void SetHeight(int height);
+	int GetWidth();
+	int GetHeight();
 	std::string WindowName = "";
 	std::string ID = "";
 private:

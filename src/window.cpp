@@ -16,7 +16,7 @@ Window::~Window()
 	}
 }
 
-bool Window::Initialize(std::string name, unsigned int width, unsigned int height, Uint32 flags, bool vsync)
+bool Window::Initialize(std::string name, Uint32 flags, bool vsync)
 {
 	std::cout << "Window " << ":" << name << ":" << " Initializing" << std::endl;
 
@@ -31,8 +31,8 @@ bool Window::Initialize(std::string name, unsigned int width, unsigned int heigh
 		WindowName.c_str(),
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		width,
-		height,
+		_width,
+		_height,
 		flags
 
 		);
@@ -61,10 +61,10 @@ bool Window::Initialize(std::string name, unsigned int width, unsigned int heigh
 
 Window::Window(Window&& other) noexcept{}
 
-void Window::SetWidth(unsigned int width){_width = width;}
-void Window::SetHeight(unsigned int height){_height = height;}
-unsigned int Window::GetWidth(){return _width;}
-unsigned int Window::GetHeight(){return _height;}
+void Window::SetWidth(int width){_width = width;}
+void Window::SetHeight(int height){_height = height;}
+int Window::GetWidth(){return _width;}
+int Window::GetHeight(){return _height;}
 
 void Window::Update(){}
 

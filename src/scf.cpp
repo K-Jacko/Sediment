@@ -120,6 +120,15 @@ void SpriteDetails::fromJson(const nlohmann::json& json)
             sprites.push_back(spriteDetail);
         }
     };
+
+    if (json.contains("backgrounds") && json["backgrounds"].is_array()) {
+        backgrounds.clear();
+        for (const auto& asset_detail : json["backgrounds"]) {
+            BackgroundDetail backgroundDetail;
+            backgroundDetail.fromJson(asset_detail);
+            backgrounds.push_back(backgroundDetail);
+        }
+    };
 }
 
 void SpriteDetail::fromJson(const nlohmann::json& json)
@@ -146,6 +155,26 @@ void SpriteTransform::fromJson(const nlohmann::json& json)
         width = json.at("width");
     if (json.contains("height"))
         height = json.at("height");
+}
+
+void BackgroundDetail::fromJson(const nlohmann::json& json)
+{
+    if (json.contains("id") && json.at("id").is_string())
+        id = json.at("id");
+    if (json.contains("name") && json.at("name").is_string())
+        name = json.at("name");
+    if (json.contains("texture") && json.at("texture").is_string())
+        texture = json.at("texture");
+    if (json.contains("x") )
+        x = json.at("x");
+    if (json.contains("y"))
+        y = json.at("y");
+    if (json.contains("width"))
+        width = json.at("width");
+    if (json.contains("height"))
+        height = json.at("height");
+    if (json.contains("scale"))
+        scale = json.at("scale");
 }
 
 void SpriteCrop::fromJson(const nlohmann::json& json)

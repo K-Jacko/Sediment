@@ -9,21 +9,22 @@ struct TransformComponent : Component
     _x = x;
     _y = y;
   };
-  TransformComponent(int x, int y, int width, int height)
+  TransformComponent(int x, int y, int width, int height, int scale = 1)
   {
     _x = x;
     _y = y;
-    _width = width;
-    _height = height;
-    rect.x = x;
-    rect.y = y;
-    rect.w = width;
-    rect.h = height;
-
+    _width = width * scale;
+    _height = height * scale;
+    _scale = scale;
+    rect.x = _x;
+    rect.y = _y;
+    rect.w = _width;
+    rect.h = _height;
   };
   int _width;
   int _height;
   int _x;
   int _y;
+  int _scale = 1;
   SDL_Rect rect;
 };

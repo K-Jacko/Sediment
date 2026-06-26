@@ -5,8 +5,8 @@
     "screen_details": [
       {
         "title": "Sediment",
-        "resolution_width": 860,
-        "resolution_height": 540,
+        "resolution_width": 1152,
+        "resolution_height": 648,
         "positionX": 100,
         "positionY": 0,
         "flags": {
@@ -35,6 +35,34 @@
         "path": "asset/logo.ico",
         "type": 0,
         "size_in_bytes": 200
+      },
+      {
+        "id": "909074f7-78cb-4fc9-864d-9f319bd18725",
+        "name": "Background_1",
+        "path": "asset/background/main/1.png",
+        "type": 0,
+        "size_in_bytes": 200
+      },
+      {
+        "id": "bc945ff8-8c06-43f1-886e-e828b5b2b2d8",
+        "name": "Background_2",
+        "path": "asset/background/main/2.png",
+        "type": 0,
+        "size_in_bytes": 200
+      },
+      {
+        "id": "4c5a6f28-c7a5-4596-a12c-b42e97ed110c",
+        "name": "Background_3",
+        "path": "asset/background/main/3.png",
+        "type": 0,
+        "size_in_bytes": 200
+      },
+      {
+        "id": "b8a70300-87d8-40a1-8f8f-95f825b26f7b",
+        "name": "Background_4",
+        "path": "asset/background/main/4.png",
+        "type": 0,
+        "size_in_bytes": 200
       }
     ]
   },
@@ -60,6 +88,48 @@
           "width": 32,
           "height": 32
         }
+      }
+    ],
+    "backgrounds": [
+      {
+        "id": "5327ab3e-5829-4e37-bd26-463018b08c00",
+        "name": "Background 1",
+        "texture": "Background_1",
+        "x": 0,
+        "y": 0,
+        "width": 576,
+        "height": 324,
+        "scale": 3
+      },
+      {
+        "id": "d6d37e37-6244-4195-b72f-3b362b440894",
+        "name": "Background 2",
+        "texture": "Background_2",
+        "x": 0,
+        "y": 0,
+        "width": 576,
+        "height": 324,
+        "scale": 3
+      },
+      {
+        "id": "ee411bda-3514-43c0-badc-88dc3453d8e1",
+        "name": "Background 3",
+        "texture": "Background_3",
+        "x": 0,
+        "y": 0,
+        "width": 576,
+        "height": 324,
+        "scale": 3
+      },
+      {
+        "id": "13d4ec3a-4bdb-4771-a283-a14c8ec2a87e",
+        "name": "Background 4",
+        "texture": "Background_4",
+        "x": 0,
+        "y": 0,
+        "width": 576,
+        "height": 324,
+        "scale": 3
       }
     ]
   }

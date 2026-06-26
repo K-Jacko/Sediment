@@ -16,7 +16,7 @@ public:
   Window* CreateSDLWindow(ScreenDetail details);
   void OpenWindow();
   void Draw();
-  Window* defaultWindow() ;
+  Window* defaultWindow() const;
 private:
   static WindowManager* _instance;
   std::unique_ptr<WindowFactory> _windowFactory;

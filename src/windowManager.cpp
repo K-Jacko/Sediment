@@ -59,7 +59,7 @@ void WindowManager::Draw()
 	}
 }
 
-Window* WindowManager::defaultWindow()
+Window* WindowManager::defaultWindow() const
 {
   if (_windows.empty())
   {

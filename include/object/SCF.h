@@ -6,6 +6,21 @@
 
 #include "SCFObjects.h"
 
+struct BackgroundDetail
+{
+    std::string id;
+    std::string name;
+    std::string texture;
+    int animationType;
+    int x = 0;
+    int y = 0;
+    int width = 0;
+    int height = 0;
+    int scale = 1;
+    void fromJson(const nlohmann::json& json);
+
+};
+
 struct SpriteCrop
 {
     int x = 0;
@@ -38,6 +53,7 @@ struct SpriteDetails
 {
     std::vector<std::string> dependencies;
     std::vector<SpriteDetail> sprites;
+    std::vector<BackgroundDetail> backgrounds;
     void fromJson(const nlohmann::json& json);
 };
 
