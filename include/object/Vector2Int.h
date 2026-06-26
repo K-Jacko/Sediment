@@ -2,8 +2,8 @@
 
 struct Vector2Int
 {
-    Vector2Int(int x, int y): _x(x), _y(y)
+    Vector2Int(int X, int Y): x(X), y(Y)
     {
     }
-    int _x, _y;
+    int x, y;
 };

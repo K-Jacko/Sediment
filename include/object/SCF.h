@@ -54,6 +54,7 @@ struct SpriteDetails
     std::vector<std::string> dependencies;
     std::vector<SpriteDetail> sprites;
     std::vector<BackgroundDetail> backgrounds;
+    SpriteDetail* getSpriteData(std::string name);
     void fromJson(const nlohmann::json& json);
 };
 

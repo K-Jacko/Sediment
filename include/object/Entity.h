@@ -7,6 +7,7 @@ public:
     Entity() = default;
     ~Entity() = default;
     std::uint32_t id = 0;
+    std::string name = "";
 };
 
 namespace std

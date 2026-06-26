@@ -7,6 +7,7 @@
 #include "components/SpriteComponent.h"
 #include "AssetManager.h"
 #include "DataManager.h"
+#include "Grid.h"
 
 
 class World
@@ -72,6 +73,7 @@ class World
       {
         Entity e;
         e.id = id;
+
         if (has<B>(e))
         {
           func(e, componentA, get<B>(e));
@@ -83,6 +85,7 @@ class World
     std::uint32_t _nextEntity = 0;
     std::vector<Entity> _entities;
     std::vector<std::unique_ptr<ISystem>> _systems;
+    std::unique_ptr<Grid> _worldGrid = nullptr;
 
     template<typename T>
       std::unordered_map<std::uint32_t, T>& _getComponentStorage()

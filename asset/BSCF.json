@@ -63,6 +63,13 @@
         "path": "asset/background/main/4.png",
         "type": 0,
         "size_in_bytes": 200
+      },
+      {
+        "id": "58d815e1-e96e-4a02-8a05-5a58d62a0705",
+        "name": "Tile_1",
+        "path": "asset/tilesheet/main/main_tilesheet.png",
+        "type": 0,
+        "size_in_bytes": 200
       }
     ]
   },
@@ -87,6 +94,24 @@
           "y": 0,
           "width": 32,
           "height": 32
+        }
+      },
+      {
+        "id": "d3864998-bde4-4dcb-b02d-edd16de45b27",
+        "name": "Grass Tile",
+        "texture": "Tile_1",
+        "transform":
+        {
+          "x": 0,
+          "y": 0,
+          "width": 64,
+          "height": 64
+        },
+        "crop": {
+          "x": 31,
+          "y": 463,
+          "width": 15,
+          "height": 15
         }
       }
     ],

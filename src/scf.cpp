@@ -102,6 +102,17 @@ void AssetDetail::fromJson(const nlohmann::json& json)
         std::cout << "Error parsing Asset detail from Json" << std::endl;
 }
 
+SpriteDetail* SpriteDetails::getSpriteData(std::string name)
+{
+    for (SpriteDetail& spriteData : sprites)
+    {
+        if (spriteData.name == name)
+        {
+            return &spriteData;
+        }
+    }
+}
+
 void SpriteDetails::fromJson(const nlohmann::json& json)
 {
     if (json.contains("dependencies") && json["dependencies"].is_array()) {
