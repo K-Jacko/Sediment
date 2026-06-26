@@ -11,16 +11,14 @@ RenderSystem::RenderSystem(World* world, SDL_Renderer* renderer)
 
 void RenderSystem::update()
 {
-  const std::vector<SpriteComponent> spriteComponents = _world->getComponentsOfType<SpriteComponent>();
-  const std::vector<TransformComponent> transformComponents = _world->getComponentsOfType<TransformComponent>();
-
-  for (int i = 0; i < _world->getComponentsOfType<SpriteComponent>().size(); i++)
-  {
-    SDL_RenderCopy(
+  _world->forEach<SpriteComponent, TransformComponent>(
+    [&](Entity e, SpriteComponent& sprite, TransformComponent& transform)
+    {
+      SDL_RenderCopy(
         _renderer,
-        spriteComponents[i].texture->getTexture(),
-        &spriteComponents[i].rect,
-        &transformComponents[i].rect
+        sprite.texture->getTexture(),
+        &sprite.rect,
+        &transform.rect
       );
-  }
+    });
 }

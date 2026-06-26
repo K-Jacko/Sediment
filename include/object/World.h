@@ -57,6 +57,28 @@ class World
       return components;
     };
 
+  template<typename T>
+    std::unordered_map<std::uint32_t, T>& getStorage()
+    {
+      return _getComponentStorage<T>();
+    }
+
+  template<typename A, typename B, typename Func>
+    void forEach(Func func)
+    {
+      auto& storage = _getComponentStorage<A>();
+
+      for (auto& [id, componentA] : storage)
+      {
+        Entity e;
+        e.id = id;
+        if (has<B>(e))
+        {
+          func(e, componentA, get<B>(e));
+        }
+      }
+    }
+
   private:
     std::uint32_t _nextEntity = 0;
     std::vector<Entity> _entities;
