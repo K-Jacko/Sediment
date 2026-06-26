@@ -1,6 +1,7 @@
 #include "../include/object/World.h"
 #include "AssetManager.h"
 #include "WindowManager.h"
+#include "components/AnimationComponent.h"
 #include "components/TransformComponent.h"
 
 void World::addEntity(Entity e)
@@ -42,7 +43,7 @@ void World::start()
     if (textureAsset != nullptr)
     {
       addComponentToEntity(e, SpriteComponent{textureAsset, rec});
-      addComponentToEntity(e, TransformComponent{spriteData.transform.x, spriteData.transform.y, spriteData.transform.width, spriteData.transform.height});
+      addComponentToEntity(e, TransformComponent{static_cast<float>(spriteData.transform.x), static_cast<float>(spriteData.transform.y), static_cast<float>(spriteData.transform.width), static_cast<float>(spriteData.transform.height)});
       addEntity(e);
     }
     else
@@ -63,13 +64,14 @@ void World::start()
     int backgroundY = wm->defaultWindow()->GetHeight() - (backgroundData.height * backgroundData.scale);
     if (textureAsset != nullptr)
     {
-      addComponentToEntity(e, TransformComponent{0, backgroundY, backgroundData.width, backgroundData.height, backgroundData.scale});
+      addComponentToEntity(e, TransformComponent{0, static_cast<float>(backgroundY), static_cast<float>(backgroundData.width), static_cast<float>(backgroundData.height), backgroundData.scale});
       addComponentToEntity(e, SpriteComponent{textureAsset, {0,0,backgroundData.width, backgroundData.height}});
+      addComponentToEntity(e, AnimationComponent{10, 10, 1, static_cast<AnimationType>(backgroundData.animationType), backgroundY});
       addEntity(e);
     }
     else
     {
-      std::cout << "Error loading texture for SpriteComponent" << std::endl;
+      std::cout << "Failed to load texture: " << backgroundData.texture << std::endl;
     }
   }
 }

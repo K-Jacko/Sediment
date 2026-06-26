@@ -165,6 +165,8 @@ void BackgroundDetail::fromJson(const nlohmann::json& json)
         name = json.at("name");
     if (json.contains("texture") && json.at("texture").is_string())
         texture = json.at("texture");
+    if (json.contains("animationType"))
+        animationType = json.at("animationType");
     if (json.contains("x") )
         x = json.at("x");
     if (json.contains("y"))

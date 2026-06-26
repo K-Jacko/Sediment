@@ -15,6 +15,7 @@ public:
   void Stop();
   bool isRunning = false;
   static float deltaTime;
+  float elapsedTime = 0.0f;
 
   DataManager* dataManager = nullptr;
   WindowManager* windowManager = nullptr;
@@ -23,4 +24,5 @@ public:
   static GameManager* _instance;
   Uint64 _lastCounter = 0;
   std::unique_ptr<World> _world;
+  SDL_Event _event;
 };

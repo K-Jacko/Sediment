@@ -1,4 +1,5 @@
 #include "singleton/GameManager.h"
+#include "systems/AnimationSystem.h"
 #include "systems/RenderSystem.h"
 
 GameManager* GameManager::_instance = nullptr;
@@ -46,6 +47,7 @@ bool GameManager::Initialize()
 
 	_world = std::make_unique<World>();
 	_world->addSystem<RenderSystem>(_world.get(), windowManager->defaultWindow()->getRenderer());
+	_world->addSystem<AnimationSystem>(_world.get());
 	_world->start();
 
 	isRunning = true;
@@ -75,11 +77,12 @@ void GameManager::Update()
 	//Instance().UpdateCamera();
 	//Instance().UpdateEverythingElse(){};
 	//Instance().UpdateCollision();
+	SDL_PollEvent(&_event);
 
 	Uint64 currentCounter = SDL_GetPerformanceCounter();
 	deltaTime = static_cast<float>(currentCounter - _lastCounter) / SDL_GetPerformanceFrequency();
 	_lastCounter = currentCounter;
-
+	elapsedTime += deltaTime;
 	WindowManager::Instance()->Update();
 	_world->updateSystems();
 };

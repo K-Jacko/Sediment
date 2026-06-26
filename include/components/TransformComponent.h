@@ -6,25 +6,21 @@ struct TransformComponent : Component
 {
   TransformComponent(int x, int y)
   {
-    _x = x;
-    _y = y;
+    x = x;
+    y = y;
   };
-  TransformComponent(int x, int y, int width, int height, int scale = 1)
+  TransformComponent(float X, float Y, float w, float h, int s = 1)
   {
-    _x = x;
-    _y = y;
-    _width = width * scale;
-    _height = height * scale;
-    _scale = scale;
-    rect.x = _x;
-    rect.y = _y;
-    rect.w = _width;
-    rect.h = _height;
+    x = X;
+    y = Y;
+    width = w * s;
+    height = h * s;
+    scale = s;
+
   };
-  int _width;
-  int _height;
-  int _x;
-  int _y;
-  int _scale = 1;
-  SDL_Rect rect;
+  float width;
+  float height;
+  float x;
+  float y;
+  int scale = 1;
 };

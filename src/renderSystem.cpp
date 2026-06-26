@@ -14,11 +14,12 @@ void RenderSystem::update()
   _world->forEach<SpriteComponent, TransformComponent>(
     [&](Entity e, SpriteComponent& sprite, TransformComponent& transform)
     {
+      SDL_Rect tRec{(int)transform.x, (int)transform.y, (int)transform.width, (int)transform.height };
       SDL_RenderCopy(
         _renderer,
         sprite.texture->getTexture(),
         &sprite.rect,
-        &transform.rect
+        &tRec
       );
     });
 }
