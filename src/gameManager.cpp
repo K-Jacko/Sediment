@@ -1,5 +1,4 @@
-#include <singleton/GameManager.h>
-
+#include "singleton/GameManager.h"
 #include "systems/RenderSystem.h"
 
 GameManager* GameManager::_instance = nullptr;
