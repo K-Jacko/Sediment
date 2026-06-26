@@ -53,11 +53,6 @@ void World::start()
 
   for (int i = DataManager::Instance()->getSCF()->spriteDetails.backgrounds.size() - 1; i >= 0; --i)
   {
-    //switch for animationDataType
-    //Transform Component
-    //Animation Component
-    //Sprite Component
-
     Entity e;
     e.id = i;
     AssetManager* am = AssetManager::Instance();

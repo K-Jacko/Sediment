@@ -4,6 +4,8 @@
 
 GameManager* GameManager::_instance = nullptr;
 
+float GameManager::deltaTime = 0.0f;
+
 GameManager* GameManager::Instance()
 {
 	if (_instance == nullptr)
@@ -17,25 +19,26 @@ GameManager* GameManager::Instance()
 bool GameManager::Initialize()
 {
 	std::cout << "Engine Launching" << std::endl;
+	_lastCounter = SDL_GetPerformanceCounter();
 
-	_dataManager = DataManager::Instance();
-	if (!_dataManager->Initialize())
+	dataManager = DataManager::Instance();
+	if (!dataManager->Initialize())
 	{
 		std::cout << "DataManager Failed to Initialize!" << std::endl;
 		Stop();
 		return false;
 	}
 
-	_windowManager = WindowManager::Instance();
-	if (!_windowManager->Initialize())
+	windowManager = WindowManager::Instance();
+	if (!windowManager->Initialize())
 	{
 		std::cout << "WindowManager Failed to Initialize!" << std::endl;
 		Stop();
 		return false;
 	}
 
-	_assetManager = AssetManager::Instance();
-	if (!_assetManager->Initialize())
+	assetManager = AssetManager::Instance();
+	if (!assetManager->Initialize())
 	{
 		std::cout << "AssetManager Failed to Initialize!" << std::endl;
 		Stop();
@@ -43,10 +46,10 @@ bool GameManager::Initialize()
 	}
 
 	_world = std::make_unique<World>();
-	_world->addSystem<RenderSystem>(_world.get(), _windowManager->defaultWindow()->getRenderer());
+	_world->addSystem<RenderSystem>(_world.get(), windowManager->defaultWindow()->getRenderer());
 	_world->start();
 
-	_isRunning = true;
+	isRunning = true;
 	std::cout << "Engine Running" << std::endl;
 	return true;
 
@@ -62,7 +65,7 @@ bool GameManager::Initialize()
 void GameManager::Stop()
 {
 	std::cout << "Stopping Engine!" << std::endl;
-	_isRunning = false;
+	isRunning = false;
 }
 
 
@@ -73,6 +76,11 @@ void GameManager::Update()
 	//Instance().UpdateCamera();
 	//Instance().UpdateEverythingElse(){};
 	//Instance().UpdateCollision();
+
+	Uint64 currentCounter = SDL_GetPerformanceCounter();
+	deltaTime = static_cast<float>(currentCounter - _lastCounter) / SDL_GetPerformanceFrequency();
+	_lastCounter = currentCounter;
+
 	WindowManager::Instance()->Update();
 	_world->updateSystems();
 };

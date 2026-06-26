@@ -13,12 +13,14 @@ public:
   void Update() override;
   void Draw();
   void Stop();
-  bool _isRunning = false;
+  bool isRunning = false;
+  static float deltaTime;
 
-  DataManager* _dataManager = nullptr;
-  WindowManager* _windowManager = nullptr;
-  AssetManager* _assetManager = nullptr;
+  DataManager* dataManager = nullptr;
+  WindowManager* windowManager = nullptr;
+  AssetManager* assetManager = nullptr;
   private:
   static GameManager* _instance;
+  Uint64 _lastCounter = 0;
   std::unique_ptr<World> _world;
 };
