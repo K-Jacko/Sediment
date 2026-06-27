@@ -2,14 +2,9 @@
 #include "singleton/AssetManager.h"
 
 AssetManager* AssetManager::_instance = 0;
-AssetManager::AssetManager()
-{
-}
+AssetManager::AssetManager(){}
 
-AssetManager::~AssetManager()
-{
-
-}
+AssetManager::~AssetManager(){}
 
 AssetManager* AssetManager::Instance()
 {

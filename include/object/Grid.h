@@ -8,10 +8,16 @@ class Grid
 public:
     Grid(std::uint32_t w, std::uint32_t h, std::uint32_t cS) : width(w), height(h), cellSize(cS)
     {
-        for (int x = 0; x < width; ++x) {
-            for (int y = 0; y < height; ++y) {
-                auto vec = Vector2Int(x * cellSize,y * cellSize);
-                grid.push_back(vec);
+        grid.reserve(width * height);
+
+        for (int x = 0; x < width; ++x)
+        {
+            for (int y = 0; y < height; ++y)
+            {
+                grid.emplace_back(Vector2Int{
+                    static_cast<int>(x * cellSize),
+                    static_cast<int>(y * cellSize)
+                });
             }
         }
     };
@@ -25,15 +31,14 @@ public:
     std::vector<Vector2Int*> getBottomRow()
     {
         std::vector<Vector2Int*> result;
-        for (auto& vec : grid)
+        result.reserve(width);
+
+        for (int x = 0; x < width; ++x)
         {
-            // std::cout << height  * cellSize - cellSize << std::endl;
-            // std::cout << vec.y << std::endl;
-            if (vec.y == height * cellSize  - cellSize)
-            {
-                result.push_back(&vec);
-            }
+            int index = (x * height) + (height - 1);
+            result.push_back(&grid[index]);
         }
+
         return result;
     }
     std::uint32_t width;

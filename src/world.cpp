@@ -29,7 +29,7 @@ void World::start()
   SCF* scf = DataManager::Instance()->getSCF();
   SpriteDetail* sd = scf->spriteDetails.getSpriteData("Player Turret");
   Entity e;
-  e.id = 101;
+  e.id = 200;
   e.name = sd->name;
   AssetManager* am = AssetManager::Instance();
   WindowManager* wm = WindowManager::Instance();
@@ -43,7 +43,7 @@ void World::start()
 
   if (textureAsset != nullptr)
   {
-    addComponentToEntity(e, SpriteComponent{textureAsset, rec});
+    addComponentToEntity(e, SpriteComponent{textureAsset, rec, e.id});
     addComponentToEntity(e, TransformComponent{static_cast<float>(sd->transform.x), static_cast<float>(sd->transform.y), static_cast<float>(sd->transform.width), static_cast<float>(sd->transform.height)});
     addEntity(e);
   }
@@ -52,45 +52,41 @@ void World::start()
     std::cout << "Error loading texture for SpriteComponent" << std::endl;
   }
   // Generate Grid
-  _worldGrid = std::make_unique<Grid>(wm->defaultWindow()->GetWidth() / 30, wm->defaultWindow()->GetHeight() / 30, 30);
+  _worldGrid = std::make_unique<Grid>(wm->defaultWindow()->GetWidth() / 64 , wm->defaultWindow()->GetHeight() / 64, 64);
+  auto bottomRow = _worldGrid->getBottomRow();
 
-  for (int i = 0; i < _worldGrid->getBottomRow().size(); i++)
+  for (int i = 0; i < bottomRow.size(); i++)
   {
     SpriteDetail* sd = scf->spriteDetails.getSpriteData("Grass Tile");
     Entity e;
-    e.id = 200 + i;
+    e.id = 100 + i;
     e.name = sd->name;
-    Vector2Int* position = _worldGrid->getBottomRow()[i];
+    Vector2Int* position = bottomRow[i];
     auto tileTexture = am->getTexture(sd->texture);
-    SDL_Rect tileRec;
-    tileRec.x = position->x;
-    tileRec.y = position->y;
-    tileRec.w = sd->crop.width;
-    tileRec.h = sd->crop.height;
-
     if (tileTexture != nullptr)
     {
-      addComponentToEntity(e, TransformComponent{static_cast<float>(position->x), static_cast<float>(position->y), static_cast<float>(sd->transform.width), static_cast<float>(sd->transform.height)});
-      addComponentToEntity(e, SpriteComponent{tileTexture, {sd->crop.x,sd->crop.y,sd->crop.width, sd->crop.height}});
-      //ColliderComponent
+      std::cout << " X:" << position->x << " Y:" << position->y << std::endl;
+      addComponentToEntity(e, TransformComponent{static_cast<float>(position->x), static_cast<float>(position->y + 10), static_cast<float>(sd->transform.width), static_cast<float>(sd->transform.height)});
+      addComponentToEntity(e, SpriteComponent{tileTexture, {sd->crop.x, sd->crop.y,sd->crop.width, sd->crop.height}, e.id});
+      // ColliderComponent
       addEntity(e);
     }
   }
 
   for (int i = DataManager::Instance()->getSCF()->spriteDetails.backgrounds.size() - 1; i >= 0; --i)
   {
-    Entity e;
-    e.id = 900 + i;
+    Entity backGroundEntity;
+    backGroundEntity.id = i;
     BackgroundDetail backgroundData = scf->spriteDetails.backgrounds[i];
-    e.name = backgroundData.name;
+    backGroundEntity.name = backgroundData.name;
     auto ta = am->getTexture(backgroundData.texture);
     int backgroundY = wm->defaultWindow()->GetHeight() - (backgroundData.height * backgroundData.scale);
     if (ta != nullptr)
     {
-      addComponentToEntity(e, TransformComponent{0, static_cast<float>(backgroundY), static_cast<float>(backgroundData.width), static_cast<float>(backgroundData.height), backgroundData.scale});
-      addComponentToEntity(e, SpriteComponent{ta, {0,0,backgroundData.width, backgroundData.height}});
-      addComponentToEntity(e, AnimationComponent{10, 10, 1, static_cast<AnimationType>(backgroundData.animationType), backgroundY});
-      addEntity(e);
+      addComponentToEntity(backGroundEntity, TransformComponent{0, static_cast<float>(backgroundY), static_cast<float>(backgroundData.width), static_cast<float>(backgroundData.height), backgroundData.scale});
+      addComponentToEntity(backGroundEntity, SpriteComponent{ta, {0,0,backgroundData.width, backgroundData.height}, static_cast<std::uint32_t>(i)});
+      addComponentToEntity(backGroundEntity, AnimationComponent{10, 10, 1, static_cast<AnimationType>(backgroundData.animationType), backgroundY});
+      addEntity(backGroundEntity);
     }
     else
     {

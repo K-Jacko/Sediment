@@ -28,8 +28,19 @@ class World
   template<typename T>
     void addComponentToEntity(Entity e, T component)
     {
+      auto [it, inserted] =
       _getComponentStorage<T>().emplace(e.id, std::move(component));
-      std::cout << "Component " << typeid(T).name() << " Added to entity " << e.id << std::endl;
+
+      if (inserted)
+      {
+        std::cout << "Added " << typeid(T).name()
+                  << " to entity " << e.id << '\n';
+      }
+      else
+      {
+        std::cout << "Entity " << e.id
+                  << " already has a " << typeid(T).name() << '\n';
+      }
     }
 
   template<typename T>
