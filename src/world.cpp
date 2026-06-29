@@ -2,6 +2,7 @@
 #include "AssetManager.h"
 #include "WindowManager.h"
 #include "components/AnimationComponent.h"
+#include "components/ColliderComponent.h"
 #include "components/TransformComponent.h"
 
 void World::addEntity(Entity e)
@@ -68,6 +69,8 @@ void World::start()
       std::cout << " X:" << position->x << " Y:" << position->y << std::endl;
       addComponentToEntity(e, TransformComponent{static_cast<float>(position->x), static_cast<float>(position->y + 10), static_cast<float>(sd->transform.width), static_cast<float>(sd->transform.height)});
       addComponentToEntity(e, SpriteComponent{tileTexture, {sd->crop.x, sd->crop.y,sd->crop.width, sd->crop.height}, e.id});
+      addComponentToEntity(e, ColliderComponent{});
+
       // ColliderComponent
       addEntity(e);
     }

@@ -1,5 +1,6 @@
 #include "singleton/GameManager.h"
 #include "systems/AnimationSystem.h"
+#include "systems/CollisionSystem.h"
 #include "systems/RenderSystem.h"
 
 GameManager* GameManager::_instance = nullptr;
@@ -48,6 +49,7 @@ bool GameManager::Initialize()
 	_world = std::make_unique<World>();
 	_world->addSystem<RenderSystem>(_world.get(), windowManager->defaultWindow()->getRenderer());
 	_world->addSystem<AnimationSystem>(_world.get());
+	_world->addSystem<CollisionSystem>(_world.get());
 	_world->start();
 
 	isRunning = true;
