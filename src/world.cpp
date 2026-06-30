@@ -28,24 +28,19 @@ void World::updateSystems()
 void World::start()
 {
   SCF* scf = DataManager::Instance()->getSCF();
-  SpriteDetail* sd = scf->spriteDetails.getSpriteData("Player Turret");
+  SpriteDetail* turretDetails = scf->spriteDetails.getSpriteData("Player Turret");
   Entity e;
   e.id = 200;
-  e.name = sd->name;
+  e.name = turretDetails->name;
   AssetManager* am = AssetManager::Instance();
   WindowManager* wm = WindowManager::Instance();
 
-  auto textureAsset = am->getTexture(sd->texture);
-  SDL_Rect rec;
-  rec.x = sd->crop.x;
-  rec.y = sd->crop.y;
-  rec.w = sd->crop.width;
-  rec.h = sd->crop.height;
+  auto textureAsset = am->getTexture(turretDetails->texture);
 
   if (textureAsset != nullptr)
   {
-    addComponentToEntity(e, SpriteComponent{textureAsset, rec, e.id});
-    addComponentToEntity(e, TransformComponent{static_cast<float>(sd->transform.x), static_cast<float>(sd->transform.y), static_cast<float>(sd->transform.width), static_cast<float>(sd->transform.height)});
+  addComponentToEntity(e, SpriteComponent{textureAsset, {turretDetails->crop.x, turretDetails->crop.y,turretDetails->crop.width, turretDetails->crop.height}, e.id});
+    addComponentToEntity(e, TransformComponent{static_cast<float>(turretDetails->transform.x), static_cast<float>(turretDetails->transform.y), static_cast<float>(turretDetails->transform.width), static_cast<float>(turretDetails->transform.height)});
     addEntity(e);
   }
   else
@@ -59,22 +54,31 @@ void World::start()
   for (int i = 0; i < bottomRow.size(); i++)
   {
     SpriteDetail* sd = scf->spriteDetails.getSpriteData("Grass Tile");
-    Entity e;
-    e.id = 100 + i;
-    e.name = sd->name;
+    Entity gt;
+    gt.id = 100 + i;
+    gt.name = sd->name;
     Vector2Int* position = bottomRow[i];
     auto tileTexture = am->getTexture(sd->texture);
     if (tileTexture != nullptr)
     {
       std::cout << " X:" << position->x << " Y:" << position->y << std::endl;
-      addComponentToEntity(e, TransformComponent{static_cast<float>(position->x), static_cast<float>(position->y + 10), static_cast<float>(sd->transform.width), static_cast<float>(sd->transform.height)});
-      addComponentToEntity(e, SpriteComponent{tileTexture, {sd->crop.x, sd->crop.y,sd->crop.width, sd->crop.height}, e.id});
-      addComponentToEntity(e, ColliderComponent{});
-
-      // ColliderComponent
-      addEntity(e);
+      addComponentToEntity(gt, TransformComponent{static_cast<float>(position->x), static_cast<float>(position->y + 10), static_cast<float>(sd->transform.width), static_cast<float>(sd->transform.height)});
+      addComponentToEntity(gt, SpriteComponent{tileTexture, {sd->crop.x, sd->crop.y,sd->crop.width, sd->crop.height}, e.id});
+      addComponentToEntity(gt, ColliderComponent{});
+      addEntity(gt);
     }
   }
+
+  SpriteDetail* playerDetail = scf->spriteDetails.getSpriteData("Player");
+  Entity player;
+  player.id = 999;
+  player.name = playerDetail->name;
+  auto playerTexture = am->getTexture(playerDetail->texture);
+  addComponentToEntity(player, TransformComponent{static_cast<float>(playerDetail->transform.x), static_cast<float>(playerDetail->transform.y), static_cast<float>(playerDetail->transform.width), static_cast<float>(playerDetail->transform.height), 4});
+  addComponentToEntity(player, SpriteComponent{playerTexture, {playerDetail->crop.x, playerDetail->crop.y,playerDetail->crop.width, playerDetail->crop.height}, player.id});
+  addComponentToEntity(player, ColliderComponent{});
+  addEntity(player);
+
 
   for (int i = DataManager::Instance()->getSCF()->spriteDetails.backgrounds.size() - 1; i >= 0; --i)
   {
